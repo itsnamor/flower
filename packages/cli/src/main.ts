@@ -1,15 +1,26 @@
 #!/usr/bin/env bun
-import * as p from "@clack/prompts";
+import { defineCommand, runMain } from "citty";
 
-const command = process.argv[2];
+const init = defineCommand({
+  meta: {
+    name: "init",
+    description: "Initialize flower in your project",
+  },
+  run: () => {
+    console.log("Hello, world!");
+    console.log("Done!");
+  },
+});
 
-if (command === "init") {
-  p.intro("🌸 flower");
-  p.log.info("Hello, world!");
-  p.outro("Done!");
-} else {
-  console.log("Usage: flower <command>");
-  console.log("");
-  console.log("Commands:");
-  console.log("  init    Initialize flower in your project");
-}
+const main = defineCommand({
+  meta: {
+    name: "flower",
+    version: "0.0.1",
+    description: "🌸 flower CLI",
+  },
+  subCommands: {
+    init,
+  },
+});
+
+runMain(main);
