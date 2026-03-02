@@ -4,7 +4,7 @@ Quality gate and delivery summary. Verify everything not covered by task-level t
 
 ```mermaid
 flowchart TD
-    Start([Completed Plan + Journal]) --> S[Write delivery summary]
+    Start([Completed plan.md & journal.md]) --> S[Write delivery summary]
     S --> CL[Run quality checklist]
     CL --> CF{All checks pass?}
     CF -- No --> Fix[Fix issues]
@@ -61,6 +61,7 @@ flowchart TD
 
    ```markdown
    ### [Short actionable title — 5-12 words]
+
    - **content**: [Detailed explanation with context and examples]
    - **tags**: [comma-separated domain keywords]
    - **scope**: [global | project:<name>]
