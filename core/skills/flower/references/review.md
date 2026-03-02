@@ -2,6 +2,8 @@
 
 Quality gate and delivery summary. Verify everything not covered by task-level testing: security, performance, project standards, and overall correctness.
 
+## Workflow (**STRICTLY ENFORCED**)
+
 ```mermaid
 flowchart TD
     Start([Completed plan.md & journal.md]) --> S[Write delivery summary]

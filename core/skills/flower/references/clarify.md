@@ -2,7 +2,7 @@
 
 Clarify user requirements, clearly describing WHAT and WHY, **not** HOW.
 
-## Workflow
+## Workflow (**STRICTLY ENFORCED**)
 
 ```mermaid
 flowchart TD

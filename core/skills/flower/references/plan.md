@@ -2,7 +2,7 @@
 
 Research HOW to implement `requirement.md` — explore the codebase, study external docs, decide the approach, and produce `plan.md`.
 
-## Workflow
+## Workflow (**STRICTLY ENFORCED**)
 
 ```mermaid
 flowchart TD

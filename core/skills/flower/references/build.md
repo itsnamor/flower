@@ -2,7 +2,7 @@
 
 Execute tasks from `plan.md`, test each one, and log knowledge in the journal.
 
-## Workflow
+## Workflow (**STRICTLY ENFORCED**)
 
 ```mermaid
 flowchart TD
