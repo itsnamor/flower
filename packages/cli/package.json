@@ -1,15 +1,32 @@
 {
   "name": "@itsflower/cli",
-  "version": "0.0.1",
-  "devDependencies": {
-    "typescript": "^5.7.0",
-    "@types/bun": "latest"
+  "version": "0.1.0",
+  "description": "🌸 flower CLI — scaffold structured development workflows",
+  "type": "module",
+  "license": "MIT",
+  "keywords": ["flower", "workflow", "cli", "templates"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/itsflower/flower"
   },
   "bin": {
-    "flower": "./src/main.ts"
+    "flower": "./dist/main.js"
   },
-  "type": "module",
+  "files": ["dist", "templates"],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsup src/main.ts --format esm --shims",
+    "prepack": "rm -f templates && cp -r ../../core/templates templates",
+    "postpack": "rm -rf templates && ln -s ../../core/templates templates"
+  },
   "dependencies": {
     "citty": "^0.2.1"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "tsup": "^8.5.1",
+    "typescript": "^5.7.0"
   }
 }

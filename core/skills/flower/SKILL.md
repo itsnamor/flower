@@ -36,6 +36,6 @@ Create a folder `.flower/quests/<datetime>--<short-description>/` when starting 
 
 ## Rules (**STRICTLY ENFORCED**)
 
-- Print `# Phase <number>: <name>` **once** before each phase. After a phase is complete, **immediately** begin the next phase without asking.
+- Print `# Phase <number>: <name>` **once** before each phase. After a phase is complete, **IMMEDIATELY** begin the next phase without asking.
 - One quest at a time — finish or park the current quest before starting another
 - Do not skip phases
