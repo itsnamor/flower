@@ -139,7 +139,7 @@ Before completing, verify both documents against this checklist:
 ### 6. Complete & Proceed
 
 - Notify the human that Interview is complete and Implementation is starting
-- Immediately proceed to Phase 2: Implementation — do not wait for approval
+- **Immediately** proceed to Phase 2: Implementation — do not wait for approval
 
 ## Output
 
