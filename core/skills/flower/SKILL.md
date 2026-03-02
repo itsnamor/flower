@@ -44,5 +44,5 @@ Templates: `.flower/templates/` — copy from template when creating a new phase
 - Read existing quest docs before making changes. Keep diffs minimal.
 - One quest at a time — finish or park the current quest before starting another.
 - Do not skip phases. Each phase's output is the next phase's input.
-- After Interview completes, notify the human and proceed to Implementation immediately.
+- After Interview completes, proceed to Implementation immediately.
 - When beginning any phase, print `# Phase <number>: <name>`.
