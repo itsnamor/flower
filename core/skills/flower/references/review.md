@@ -6,12 +6,12 @@ Quality gate and delivery summary. Verify everything not covered by task-level t
 
 ```mermaid
 flowchart TD
-    Start([Completed plan.md & journal.md]) --> S[Write delivery summary]
+    Start([plan.md & journal.md]) --> S[Write delivery summary]
     S --> CL[Run quality checklist]
     CL --> CF{All checks pass?}
     CF -- No --> Fix[Fix issues]
     Fix --> CL
-    CF -- Yes --> Done[Mark review as completed]
+    CF -- Yes --> Done([Mark review as completed])
 ```
 
 ## Input
