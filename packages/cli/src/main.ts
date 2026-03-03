@@ -89,7 +89,7 @@ const init = defineCommand({
 const main = defineCommand({
   meta: {
     name: "flower",
-    version: "0.1.1",
+    version: "0.1.2",
     description: "🌸 flower CLI",
   },
   subCommands: {

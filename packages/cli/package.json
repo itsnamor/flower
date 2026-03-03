@@ -1,6 +1,6 @@
 {
   "name": "@itsflower/cli",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "🌸 flower CLI — scaffold structured development workflows",
   "keywords": [
     "cli",
