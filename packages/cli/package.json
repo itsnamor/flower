@@ -18,7 +18,9 @@
   },
   "files": [
     "dist",
-    "templates"
+    "templates",
+    "skills",
+    "commands"
   ],
   "type": "module",
   "publishConfig": {
@@ -27,8 +29,8 @@
   "scripts": {
     "build": "tsup src/main.ts --format esm --shims",
     "release": "bun run ../../scripts/release.ts",
-    "prepack": "npm run build && rm -f templates && cp -r ../../core/templates templates",
-    "postpack": "rm -rf templates && ln -s ../../core/templates templates"
+    "prepack": "npm run build && rm -f templates && cp -r ../../core/templates templates && rm -rf skills && cp -r ../../core/skills skills && rm -rf commands && cp -r ../../core/commands commands",
+    "postpack": "rm -rf templates && ln -s ../../core/templates templates && rm -rf skills commands"
   },
   "dependencies": {
     "citty": "^0.2.1"
