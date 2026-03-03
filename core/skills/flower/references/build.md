@@ -56,6 +56,8 @@ Check the task checkbox in plan: `- [ ]` → `- [x]`
 
 ### Log in journal
 
+Template: `.flower/templates/journal.md`
+
 Only when something noteworthy happened. Skip if plan was followed exactly.
 
 | Log this             | Example                                                      |
