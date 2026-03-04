@@ -2,7 +2,7 @@
 
 Clarify user requirements, clearly describing WHAT and WHY, **not** HOW.
 
-## Workflow (**STRICTLY ENFORCED**)
+## Workflow
 
 ```mermaid
 flowchart TD
@@ -14,6 +14,8 @@ flowchart TD
     C3 -- Yes --> C5[Create `requirement.md`]
     C5 --> End([Proceed to Phase 2: Plan])
 ```
+
+For each step, follow the instructions below **strictly**
 
 ## Steps
 
@@ -39,13 +41,13 @@ Use extracted keywords to investigate before asking:
 
 Only if ambiguities remain after research:
 
-| Rule            | Detail                                                                                |
-| --------------- | ------------------------------------------------------------------------------------- |
-| Provide options | Offer choices, not open-ended questions. E.g., "(a) partial, (b) exact, or (c) both?" |
-| Batch questions | Group related questions. Max ~5 per round.                                            |
-| Be specific     | Reference concrete code, files, or behaviors.                                         |
-| Easy to answer  | Human should answer in a few words or by picking an option.                           |
-| Show research   | Share what you found to give context to your question.                                |
+| Rule            | Detail                                                 |
+| --------------- | ------------------------------------------------------ |
+| Provide options | Prefer choices, not open questions.                    |
+| Batch questions | Group related questions. Max 5 per round.              |
+| Be specific     | Reference concrete code, files, or behaviors.          |
+| Easy to answer  | Human answers in few words or picks option.            |
+| Show research   | Share what you found to give context to your question. |
 
 After each response, restart: analyze → research based on new info → evaluate remaining ambiguities, gaps.
 
@@ -73,11 +75,10 @@ Template in `.flower/templates/requirement.md`.
 
 ## Rules
 
-- **Read before asking** — detect keywords and research the codebase first; only ask what you cannot answer yourself
-- **Every word matters** — read the human's input thoroughly; do not skim or skip
-- **Options over open-ended** — always provide choices when asking questions
-- **Draft once, draft right** — documents must be accurate and complete on first draft; the Q&A phase exists to ensure this
-- **Problem ≠ solution** — requirement describes what's wrong, not how to fix it
-- **Non-Goals prevent scope creep** — invest effort here
+- **Read before asking** — research first, ask only what you can't answer
+- **Every word matters** — read input thoroughly, don't skip anything
+- **Options over open-ended** — prefer always giving choices when asking
+- **Problem ≠ solution** — describe what's wrong, not how to fix it
+- **Non-Goals prevent scope creep** — put effort here
 - **Self-contained but concise** — a reader must understand the problem and success criteria without reading the codebase
 - **No assumptions** — ambiguities must be resolved through research or Q&A, never assumed

@@ -1,8 +1,8 @@
 # Phase 3: Build
 
-Execute tasks from `plan.md`, test each one, and log knowledge in the journal.
+Execute tasks from `plan.md` in order. Test each one. Mark it done. Repeat.
 
-## Workflow (**STRICTLY ENFORCED**)
+## Workflow
 
 ```mermaid
 flowchart TD
@@ -10,13 +10,13 @@ flowchart TD
     B1 --> B2[Test / Verify]
     B2 --> C1{Pass?}
     C1 -- no --> B3[Fix issue]
-    C1 -- yes --> B4[Mark task done]
+    C1 -- yes --> B4[Mark task done ✓]
     B3 --> B2
-    B4 --> B5[Log in journal if noteworthy]
+    B4 --> B5[Log if noteworthy]
     B5 --> C2{All tasks done?}
     C2 -- no --> B1
-    C2 -- yes --> B6[Mark plan as completed]
-    B6 --> End([Proceed to Phase 4: Review])
+    C2 -- yes --> B6[Mark plan completed]
+    B6 --> End([Phase 4: Review])
 ```
 
 ## Input
@@ -26,16 +26,9 @@ flowchart TD
 
 ## Steps
 
-### Execute task
+### 1. Execute task
 
-For each task in plan order:
-
-- Read the task's Description, AC, and Approach
-- Investigate relevant code before changing it
-- Implement following codebase conventions
-- One logical change per task, as scoped in the plan
-
-**Scale guidance:**
+Read the task's Description, AC, and Approach. Investigate relevant code. Implement. Stay in scope.
 
 | Complexity   | Investigation       | Implementation          | Testing                  |
 | ------------ | ------------------- | ----------------------- | ------------------------ |
@@ -43,64 +36,61 @@ For each task in plan order:
 | **Standard** | Read related files  | Follow approach in plan | Related test suite       |
 | **Complex**  | Deep codebase study | Incremental changes     | Full test suite + manual |
 
-### Test / Verify
+### 2. Test
 
-- Run relevant tests — unit, integration, or manual as appropriate
-- Verify every AC for this task passes
-- If tests fail → fix and re-verify; do not move on
-- If unrelated tests were already failing → note in journal, do not fix
+Run relevant tests. Verify every AC passes. Fix failures before moving on. If unrelated tests were already failing, note in journal and leave them.
 
-### Mark task done
+### 3. Mark task done — do not skip
 
-Check the task checkbox in plan: `- [ ]` → `- [x]`
+**Immediately after tests pass**, check the checkbox in `plan.md`:
 
-### Log in journal
-
-Template: `.flower/templates/journal.md`
-
-Only when something noteworthy happened. Skip if plan was followed exactly.
-
-| Log this             | Example                                                      |
-| -------------------- | ------------------------------------------------------------ |
-| Deviation from plan  | "Used library X instead of Y because Y doesn't support Z"    |
-| Non-obvious decision | "Chose eager loading — dataset is always small"              |
-| Problem & resolution | "Circular dep between A and B — extracted C"                 |
-| Discovery            | "Found existing utility that handles 80% — reused it"        |
-| New task added       | "Added task 4b: migrate old data — discovered during task 4" |
-
-Do **not** log: routine implementation, standard debugging, info already in commits.
-
-**Entry format:**
-
-```markdown
-### [Short actionable title]
-
-- **tags**: [comma-separated domain keywords]
-- **scope**: [global | project:<name>]
-- **context**: [What was being worked on]
-- **insight**: [The decision, discovery, or deviation — focus on WHY]
+```
+- [ ] Task title  →  - [x] Task title
 ```
 
-Create journal file on first entry from template.
+This tracks resumable state. A task is not done until checked.
 
-### Mark plan as completed
+### 4. Log if noteworthy
 
-After all tasks are done, verify:
+Open `.flower/journal.md` (create from `templates/journal.md` on first use).
 
-- [ ] All task checkboxes checked
-- [ ] All task ACs verified
-- [ ] All tests pass (full relevant test suite)
+Log only when the plan was **not** followed exactly:
+
+- Deviated from the planned approach
+- Made a non-obvious decision
+- Hit a problem and resolved it
+- Discovered something reusable
+- Added a new task
+
+Entry format:
+
+```markdown
+### [Short title]
+- **tags**: [keywords]
+- **scope**: [global | project:<name>]
+- **context**: [what you were doing]
+- **insight**: [why — the decision, deviation, or discovery]
+```
+
+Skip if the plan was followed exactly with no surprises.
+
+### 5. Mark plan as completed
+
+After all tasks are checked, verify:
+
+- [ ] All checkboxes checked
+- [ ] All ACs verified
+- [ ] All tests pass
 - [ ] No unintended side effects
-- [ ] Journal captures all deviations
-- [ ] Any tasks added during build are also completed
+- [ ] Deviations captured in journal
 
-If gaps exist → fix before proceeding. Then set `status: completed` in plan frontmatter.
+Then set `status: completed` in plan frontmatter.
 
 ## Rules
 
-- **Never skip testing** — every task verified before marking done
-- **Don't change task scope** — update the plan first, note in journal
-- **Add, don't expand** — new work = new task in the plan
-- **Follow plan order** — respect dependencies; only skip ahead when blocked
-- **Resumable state** — plan shows exactly where to resume (next unchecked task)
-- **Don't fix unrelated issues** — note in journal for a future quest
+- Never skip testing
+- Never skip marking done — it tracks where to resume
+- One task at a time; don't expand scope mid-task
+- New work = new task in the plan, not an expansion of the current one
+- Follow plan order; skip ahead only when blocked
+- Don't fix unrelated issues — note them for a future quest

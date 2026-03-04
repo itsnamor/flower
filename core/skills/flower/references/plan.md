@@ -1,17 +1,19 @@
 # Phase 2: Plan
 
-Research HOW to implement `requirement.md` — explore the codebase, study external docs, decide the approach, and produce `plan.md`.
+Research HOW to implement `requirement.md` — explore codebase, study docs, decide approach, produce `plan.md`.
 
-## Workflow (**STRICTLY ENFORCED**)
+## Workflow
+
+Execute steps in order. Do not skip. Do not create `plan.md` until the condition is met.
 
 ```mermaid
 flowchart TD
     Start([requirement.md]) --> P1[Codebase explore]
     P1 --> P2[Research external]
-    P2 --> C1{Approach decided?}
+    P2 --> C1{Unclear / incomplete / multiple approaches?}
     C1 -- no --> P3[Ask for clarification]
-    P3 --> P4[Create plan.md]
-    C1 -- yes --> P4
+    P3 --> P1
+    C1 -- yes --> P4[Create plan.md]
     P4 --> End([Proceed to Phase 3: Build])
 ```
 
@@ -19,27 +21,29 @@ flowchart TD
 
 ### Codebase explore
 
-Use goals and acceptance criteria from `requirement.md` as search targets:
+Search with goals and acceptance criteria from `requirement.md` as targets:
 
 - **Architecture** — modules, layers, data flow relevant to the requirement
-- **Patterns** — how similar features are implemented; conventions to follow
-- **Reuse** — what already exists vs. what must be built
+- **Patterns** — how similar features are built; conventions to follow
+- **Reuse** — what exists vs. what must be built
 
 Tools: grep, glob, read files, `repomix`.
 
 ### Research external
 
-For every technology, library, or pattern relevant to the requirement:
+For every technology, library, or pattern in scope:
 
 - **Docs** — capabilities, limitations, API surface
 - **Best practices** — recommended approaches, common pitfalls
-- **Alternatives** — competing libraries or patterns that solve the same problem
+- **Alternatives** — other libraries or patterns solving the same problem
 
 Tools: `context7`, fetch, web search.
 
 ### Ask for clarification
 
-When approach is NOT decided — ask. Do not decide alone.
+Triggered when the approach is unclear, incomplete, or has multiple valid paths. **Do not decide alone.**
+
+After receiving answers, loop back to **Codebase explore** to validate the clarified approach before proceeding.
 
 | Trigger                   | What to present                        |
 | ------------------------- | -------------------------------------- |
@@ -47,14 +51,16 @@ When approach is NOT decided — ask. Do not decide alone.
 | New library or dependency | What it does, why needed, alternatives |
 | Significant tradeoff      | What is gained vs. given up            |
 
-| Rule            | Detail                                                 |
-| --------------- | ------------------------------------------------------ |
-| Provide options | Offer choices with tradeoffs, not open-ended questions |
-| Show research   | Share findings to give context                         |
-| Batch questions | Group related decisions. Max ~5 per round              |
-| Be specific     | Reference concrete code, libraries, or behaviors       |
+| Rule            | Detail                                               |
+| --------------- | ---------------------------------------------------- |
+| Provide options | Offer choices with tradeoffs, not open-ended queries |
+| Show research   | Share findings to give context                       |
+| Batch questions | Group related decisions. Max ~5 per round            |
+| Be specific     | Reference concrete code, libraries, or behaviors     |
 
 ### Create `plan.md`
+
+Only proceed here when the approach is fully decided, covers 100% of requirements, and has a single clear path.
 
 Template in `.flower/templates/plan.md`. Set `status: in-progress`.
 
@@ -88,7 +94,9 @@ If no viable approach exists → set `status: rejected`, fill `## Rejection Reas
 
 ## Rules
 
+- **Follow the workflow** — never skip steps or reorder them
 - **Research before deciding** — explore codebase and docs before forming an approach
+- **Loop on uncertainty** — if unclear after research, ask for clarification then re-explore; repeat until resolved
 - **Surface choices** — when multiple approaches exist, present them with tradeoffs; never pick silently
 - **New deps need approval** — never add a library to the plan without asking
 - **Decisions in the document** — every choice from Q&A must appear in Technical Decisions
