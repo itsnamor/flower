@@ -1,0 +1,44 @@
+{
+  "skill_name": "flower-design",
+  "evals": [
+    {
+      "id": 1,
+      "name": "frontend-design-with-path",
+      "prompt": "Create design for .agents/flower/250411-1430--add-dark-mode-toggle",
+      "expected_output": "Reads requirement, explores codebase, drafts design, asks for confirmation, creates design.md",
+      "assertions": [
+        "Reads requirement.md from the specified folder",
+        "Determines design is needed (feature type)",
+        "Drafts design with frontend-specific details",
+        "Asks user for feedback on design",
+        "Creates design.md after approval"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "ask-for-path-if-missing",
+      "prompt": "Create design",
+      "expected_output": "Asks user for task folder path",
+      "assertions": [
+        "Asks user which task they're working on",
+        "Provides example of folder format",
+        "Waits for user input before proceeding"
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "skip-simple-task",
+      "prompt": "Create design for .agents/flower/250411-1600--fix-login-button",
+      "expected_output": "Informs user that design is not needed for this simple bug fix",
+      "assertions": [
+        "Reads requirement.md",
+        "Determines design is NOT needed (bug type, simple)",
+        "Informs user design is skipped",
+        "Does NOT create design.md"
+      ],
+      "files": []
+    }
+  ]
+}

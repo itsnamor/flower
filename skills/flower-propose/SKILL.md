@@ -156,7 +156,6 @@ The loop works as follows:
 Exit the loop and proceed to Feasibility when ANY of these is true:
 
 - Requirement is clear enough
-- User says "proceed", "that's all", "good enough"
 - Iteration count = 4 (proceed with best understanding)
 - User asks to stop
 
