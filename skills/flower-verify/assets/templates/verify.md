@@ -49,14 +49,16 @@ createdAt: YYYY-MM-DD HH:MM
 
 - [ ] AC1: <!-- acceptance criteria -->
   - Status: <!-- pending | passed | failed -->
-  - Method: <!-- testing method -->
+  - Method: <!-- Static Analysis | Dynamic Testing | Test Suite -->
   - Files: <!-- implementing files -->
+  - Evidence: <!-- specific findings -->
   - Notes:
 
 - [ ] AC2: <!-- acceptance criteria -->
   - Status: pending
   - Method:
   - Files:
+  - Evidence:
   - Notes:
 
 ### Status
@@ -127,4 +129,3 @@ None
 
 - [ ] No CRITICAL issues
 - [ ] All CRITICAL issues documented with reason
-- [ ] Ready for flower-review

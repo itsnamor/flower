@@ -29,18 +29,18 @@ flowchart TD
     M --> N[Done]
 ```
 
-|     | Step                         | Action |
-| --- | ---------------------------- | ------ |
-| 1   | Get Task Path                |
-| 2   | Read All Documents           |
-| 3   | Identify Files to Review     |
-| 4   | Create review.md             |
-| 5   | Review Files One-by-One      |
-| 6   | Update review.md (MANDATORY) |
-| 7   | Review Cross-Cutting         |
-| 8   | Update review.md (MANDATORY) |
-| 9   | Categorize Issues            |
-| 10  | Final Summary                |
+| Step | Action                        |
+| ---- | ----------------------------- |
+| 1    | Get Task Path                 |
+| 2    | Read All Documents            |
+| 3    | Identify Files to Review      |
+| 4    | Create review.md              |
+| 5    | Review Files One-by-One       |
+| 6    | Update review.md (MANDATORY)  |
+| 7    | Review Cross-Cutting Concerns |
+| 8    | Update review.md (MANDATORY)  |
+| 9    | Categorize Issues             |
+| 10   | Final Summary                 |
 
 ---
 
@@ -61,7 +61,7 @@ flowchart TD
 **After user provides:**
 
 - Construct full path: `.agents/flower/{folder-name}`
-- Verify `requirement.md` exists
+- Verify `requirement.md` and `plan.md` exist
 - If not found, ask again
 
 ---
@@ -75,7 +75,7 @@ flowchart TD
 3. **plan.md** - Identify files created/modified
 4. **verify.md** (if exists) - See verification results
 
-### Purpose
+### Extract Information
 
 Understand context before reviewing:
 
@@ -125,7 +125,7 @@ Read `assets/templates/review.md`
 ### Fill Content
 
 1. Set `title` matching the task
-2. Set `createdAt` to current datetime
+2. Set `createdAt` to current datetime (format: YYYY-MM-DD HH:MM)
 3. List all files to review
 4. Keep all checks as `pending`
 5. Leave notes empty
@@ -289,7 +289,7 @@ Check for:
 
 ## Step 6: Update review.md (MANDATORY)
 
-**This step is mandatory after reviewing each file. Never skip.**
+**This step is mandatory after reviewing each file.**
 
 ### Update Process
 
@@ -331,7 +331,7 @@ After reviewing each file, immediately update `.agents/flower/{folder-name}/revi
 **Issues:**
 
 ```markdown
-### BLOCKING
+### CRITICAL
 
 - **src/contexts/ThemeContext.tsx:15** - Hardcoded API key
   - Issue: API key hardcoded in source
@@ -380,7 +380,7 @@ Check if:
 
 ## Step 8: Update review.md (MANDATORY)
 
-**This step is mandatory after cross-cutting review. Never skip.**
+**This step is mandatory after cross-cutting review.**
 
 ### Update Cross-Cutting Section
 
@@ -397,15 +397,15 @@ Fill cross-cutting concerns section with:
 
 ### Severity Levels
 
-| Level        | Meaning                    | When to Use                             |
-| ------------ | -------------------------- | --------------------------------------- |
-| BLOCKING     | Must fix before proceeding | Security vulnerabilities, critical bugs |
-| IMPORTANT    | Should fix                 | Quality issues, missing tests           |
-| NICE-TO-HAVE | Optional improvements      | Minor refactoring opportunities         |
+| Level      | Meaning                    | When to Use                             |
+| ---------- | -------------------------- | --------------------------------------- |
+| CRITICAL   | Must fix before proceeding | Security vulnerabilities, critical bugs |
+| WARNING    | Should fix                 | Quality issues, missing tests           |
+| SUGGESTION | Optional improvements      | Minor refactoring opportunities         |
 
 ### Categorization Rules
 
-**BLOCKING:**
+**CRITICAL:**
 
 - Hardcoded secrets
 - Authentication bypasses
@@ -413,14 +413,14 @@ Fill cross-cutting concerns section with:
 - XSS vulnerabilities
 - Critical logic errors
 
-**IMPORTANT:**
+**WARNING:**
 
 - Duplicate code (significant)
 - Missing tests for core features
 - Missing input validation
 - Complex code that needs simplification
 
-**NICE-TO-HAVE:**
+**SUGGESTION:**
 
 - Minor naming improvements
 - Small refactoring opportunities
@@ -433,37 +433,33 @@ Fill cross-cutting concerns section with:
 
 ### Calculate Summary
 
-| Category      | BLOCKING | IMPORTANT | NICE-TO-HAVE |
-| ------------- | -------- | --------- | ------------ |
-| Quality       | --       | --        | --           |
-| Security      | --       | --        | --           |
-| Cross-cutting | --       | --        | --           |
+| Category      | CRITICAL | WARNING | SUGGESTION |
+| ------------- | -------- | ------- | ---------- |
+| Quality       | --       | --      | --         |
+| Security      | --       | --      | --         |
+| Cross-cutting | --       | --      | --         |
 
 ### Determine Recommendation
 
-**If BLOCKING issues found:**
+**If CRITICAL issues found:**
 
 ```
 REVIEW FAILED
 
-Blocking issues:
-- [list blocking issues]
-
-Fix blocking issues before proceeding.
+Critical issues:
+- [list critical issues]
 ```
 
-**If only IMPORTANT/NICE-TO-HAVE:**
+**If only WARNING/SUGGESTION:**
 
 ```
 REVIEW PASSED (with notes)
 
-Important issues:
-- [list important issues]
+Warnings:
+- [list warnings]
 
-Nice-to-have:
-- [list nice-to-have issues]
-
-Recommendation: Fix important issues if time permits. Document reason if skipped.
+Suggestions:
+- [list suggestions]
 ```
 
 **If all pass:**
@@ -488,13 +484,12 @@ Review Complete: .agents/flower/{folder-name}/review.md
 Files reviewed: X
 
 Summary:
-| Category      | BLOCKING | IMPORTANT | NICE-TO-HAVE |
+| Category      | CRITICAL | WARNING | SUGGESTION |
 |---------------|----------|-----------|--------------|
 | Quality       | X        | Y         | Z            |
 | Security      | X        | Y         | Z            |
 | Cross-cutting | X        | Y         | Z            |
 
-Recommendation: [recommendation]
 ```
 
 ---
@@ -505,8 +500,7 @@ After completion, inform user:
 
 - File location
 - Summary table
-- Issues by severity
-- Recommendation
+- Issues by severity (CRITICAL/WARNING/SUGGESTION)
 
 ---
 

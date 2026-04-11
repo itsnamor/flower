@@ -68,7 +68,7 @@ flowchart TD
 2. **design.md** (if exists) - Understand how to build
 3. **plan.md** - Understand task order
 
-### Extract from Each
+### Extract Information
 
 **From requirement.md:**
 
@@ -152,7 +152,7 @@ Always follow these principles:
 
 ## Step 5: Update plan.md (MANDATORY)
 
-**This step is mandatory after each task. Never skip.**
+**This step is mandatory after each task.**
 
 ### Update Process
 
@@ -247,8 +247,6 @@ Files:
 - src/contexts/ThemeContext.tsx (created)
 - src/components/ThemeToggle.tsx (created)
 - src/App.tsx (modified)
-
-Next: Run /flower:verify to test the implementation
 ```
 
 ---
@@ -289,4 +287,3 @@ After completion, inform user:
 - Summary of work done
 - Files changed
 - Tests status
-- Recommendation for next phase

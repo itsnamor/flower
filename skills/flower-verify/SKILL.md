@@ -29,17 +29,17 @@ flowchart TD
     M --> N[Done]
 ```
 
-|     | Step                         | Action |
-| --- | ---------------------------- | ------ |
-| 1   | Get Task Path                |
-| 2   | Read All Documents           |
-| 3   | Check Completeness           |
-| 4   | Update verify.md (MANDATORY) |
-| 5   | Check Correctness            |
-| 6   | Update verify.md (MANDATORY) |
-| 7   | Check Coherence (if design)  |
-| 8   | Update verify.md (MANDATORY) |
-| 9   | Final Summary                |
+| Step | Action                             |
+| ---- | ---------------------------------- |
+| 1    | Get Task Path                      |
+| 2    | Read All Documents                 |
+| 3    | Check Completeness                 |
+| 4    | Update verify.md (MANDATORY)       |
+| 5    | Check Correctness                  |
+| 6    | Update verify.md (MANDATORY)       |
+| 7    | Check Coherence (if design exists) |
+| 8    | Update verify.md (MANDATORY)       |
+| 9    | Final Summary                      |
 
 ---
 
@@ -60,7 +60,7 @@ flowchart TD
 **After user provides:**
 
 - Construct full path: `.agents/flower/{folder-name}`
-- Verify `requirement.md` exists
+- Verify `requirement.md` and `plan.md` exist
 - If not found, ask again
 
 ---
@@ -132,7 +132,7 @@ Incomplete tasks:
 
 ## Step 4: Update verify.md (MANDATORY)
 
-**This step is mandatory after completeness check. Never skip.**
+**This step is mandatory after completeness check.**
 
 ### Create verify.md
 
@@ -163,24 +163,72 @@ Look for:
 - "AC1:", "AC2:", etc.
 - Success criteria checkboxes
 
+### Testing Approaches
+
+Choose the appropriate testing approach based on available context:
+
+| Approach            | When to Use                       | Tools/Methods                       |
+| ------------------- | --------------------------------- | ----------------------------------- |
+| **Static Analysis** | No running app, verify code logic | Grep, View, LSP, code inspection    |
+| **Dynamic Testing** | App is running, verify behavior   | Run app, API calls, browser testing |
+| **Test Suite**      | Tests exist                       | Run test files, check results       |
+
+### Testing Methods by AC Type
+
+**When App is NOT Running (Static Analysis):**
+
+| AC Type         | Verification Method                                                                                             |
+| --------------- | --------------------------------------------------------------------------------------------------------------- |
+| UI behavior     | Find component code, verify logic flows correctly. Check event handlers exist and call correct functions.       |
+| API response    | Find API route handlers, verify request parsing and response formatting. Check status codes and data structure. |
+| Data validation | Find validation logic, verify checks for all constraints. Check edge cases are handled.                         |
+| Error handling  | Find try-catch blocks, verify errors are caught and handled. Check error messages exist.                        |
+| Performance     | Find algorithm code, analyze complexity. Check for obvious inefficiencies (N+1 queries, unbounded loops).       |
+| Integration     | Find integration code, verify external service calls exist. Check configuration and auth handling.              |
+
+**When App IS Running (Dynamic Testing):**
+
+| AC Type         | Verification Method                                                             |
+| --------------- | ------------------------------------------------------------------------------- |
+| UI behavior     | Navigate to feature, interact with UI, verify expected behavior                 |
+| API response    | Make actual API calls (curl, browser, Postman), verify response data and status |
+| Data validation | Submit valid and invalid data, verify acceptance/rejection                      |
+| Error handling  | Trigger error conditions, verify error messages and recovery                    |
+| Performance     | Measure load times, compare against baseline                                    |
+| Integration     | Test with real external services or mocks                                       |
+
+**When Tests Exist:**
+
+| Action                | Command                                             |
+| --------------------- | --------------------------------------------------- |
+| Run unit tests        | `npm test`, `pytest`, or project's test command     |
+| Run integration tests | Check package.json or test config for test commands |
+| Check test coverage   | Run coverage report if available                    |
+
 ### Test Each AC
 
 For each acceptance criteria:
 
-1. **Identify test method** based on AC type:
+1. **Identify AC type** (UI/API/Data/Error/Performance/Integration)
+2. **Choose appropriate testing method** based on context
+3. **Perform verification**:
+   - If static: Find relevant code files, read and analyze
+   - If dynamic: Run app, perform actions, observe results
+   - If tests: Run test suite, check results
+4. **Find implementation files** using Grep/Glob to locate relevant code
+5. **Document result** with evidence
+6. **Continue to next AC**
 
-   | AC Type         | Testing Method                |
-   | --------------- | ----------------------------- |
-   | UI behavior     | Run app, manually test        |
-   | API response    | Make API call, check response |
-   | Data validation | Test with valid/invalid data  |
-   | Error handling  | Trigger error, check handling |
-   | Performance     | Measure and compare           |
-   | Integration     | Test with external systems    |
+### Evidence Documentation
 
-2. **Perform test**
-3. **Document result**
-4. **Continue to next AC**
+For each AC, document:
+
+| Field    | Content                                                        |
+| -------- | -------------------------------------------------------------- |
+| Method   | Static Analysis / Dynamic Testing / Test Suite                 |
+| Files    | List of files that implement this AC                           |
+| Evidence | Specific findings (function names, line numbers, test results) |
+| Notes    | Any observations or caveats                                    |
 
 ### Report Correctness
 
@@ -199,7 +247,7 @@ For each AC, report:
 
 ## Step 6: Update verify.md (MANDATORY)
 
-**This step is mandatory after each AC test. Never skip.**
+**This step is mandatory after each AC test.**
 
 ### Update Correctness Section
 
@@ -286,7 +334,7 @@ Check if new code follows existing project patterns:
 
 ## Step 8: Update verify.md (MANDATORY)
 
-**This step is mandatory after coherence check. Never skip.**
+**This step is mandatory after coherence check.**
 
 ### Update Coherence Section
 
@@ -317,8 +365,6 @@ VERIFICATION FAILED
 
 Critical issues:
 - [list critical issues]
-
-Fix before proceeding to review.
 ```
 
 **If only WARNING/SUGGESTION:**
@@ -331,8 +377,6 @@ Warnings:
 
 Suggestions:
 - [list suggestions]
-
-Ready for review (consider addressing warnings).
 ```
 
 **If all pass:**
@@ -340,7 +384,7 @@ Ready for review (consider addressing warnings).
 ```
 VERIFICATION PASSED
 
-All checks passed. Ready for review.
+All checks passed.
 ```
 
 ### Update verify.md Summary
@@ -362,8 +406,6 @@ Summary:
 | Coherence    | Followed    |
 
 Issues: [count] CRITICAL, [count] WARNING, [count] SUGGESTION
-
-Recommendation: [recommendation]
 ```
 
 ---
@@ -385,7 +427,6 @@ After completion, inform user:
 - File location
 - Summary table
 - Issue count by level
-- Recommendation
 
 ---
 

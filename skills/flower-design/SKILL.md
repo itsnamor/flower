@@ -1,6 +1,6 @@
 ---
 name: flower-design
-description: Create technical design from requirement.md. Use after flower-propose when the task is complex. Skip for simple tasks. Triggers on 'design', 'architecture', 'technical approach'.
+description: Create technical design from requirement.md. Use when the task is complex. Skip for simple tasks. Triggers on 'design', 'architecture', 'technical approach'.
 ---
 
 # Flower Design
@@ -108,7 +108,7 @@ Then stop. Do not create design.md.
 
 ## Step 4: Explore
 
-### Codebase
+### Explore Codebase
 
 Search for:
 
@@ -117,7 +117,7 @@ Search for:
 - Dependencies and configurations
 - Related modules
 
-### Web (if helpful)
+### Explore Web (if helpful)
 
 Search for:
 
@@ -172,13 +172,17 @@ Based on task type, draft the design:
 
 - Prefer closed questions (Yes/No, multiple choice) over open-ended
 - One question at a time, or max 2-3 related questions together
-- Use information from context gathering to avoid asking what's already known
-- Stop early if requirement is clear
+- Use information from exploration to avoid asking what's already known
+- Stop early if design is approved
 
 ### Exit Conditions
 
-- User approves design
-- Max 4 iterations reached
+Exit the loop and create design.md when ANY of these is true:
+
+| Condition            | Action                      |
+| -------------------- | --------------------------- |
+| User approves design | Proceed to create design.md |
+| Iteration count = 4  | Proceed with current draft  |
 
 ---
 
@@ -191,7 +195,7 @@ Read `assets/templates/design.md`
 ### Fill Content
 
 1. Set `title` matching the requirement
-2. Set `createdAt` to current datetime
+2. Set `createdAt` to current datetime (format: YYYY-MM-DD HH:MM)
 3. Fill all sections with drafted content
 4. Ensure task type-specific details are included
 

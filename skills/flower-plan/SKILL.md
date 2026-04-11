@@ -212,17 +212,22 @@ Each task gets a specific acceptance criteria:
 4. **Refine**: Update plan based on feedback
 5. **Repeat**: Ask again until approved or max iterations
 
-### Example Questions
+### Question Guidelines
 
-- "Should [task X] come before [task Y]?"
-- "Is [granularity Z] appropriate, or should I split/merge?"
-- "Any missing tasks for [requirement AC]?"
+- Prefer closed questions (Yes/No, multiple choice) over open-ended
+- One question at a time, or max 2-3 related questions together
+- Use information from requirement and design to avoid asking what's already known
+- Stop early if plan is approved
 
 ### Exit Conditions
 
-- User approves plan
-- User says "looks good", "proceed", "ok"
-- Max 4 iterations reached
+Exit the loop and create plan.md when ANY of these is true:
+
+| Condition                                        | Action                     |
+| ------------------------------------------------ | -------------------------- |
+| User approves plan                               | Proceed to create plan.md  |
+| User confirms with "looks good", "proceed", "ok" | Proceed to create plan.md  |
+| Iteration count = 4                              | Proceed with current draft |
 
 ---
 
@@ -235,7 +240,7 @@ Read `assets/templates/plan.md`
 ### Fill Content
 
 1. Set `title` matching the requirement
-2. Set `createdAt` to current datetime
+2. Set `createdAt` to current datetime (format: YYYY-MM-DD HH:MM)
 3. Fill Overview with brief summary
 4. Fill Task Breakdown with phases and tasks
 5. Each task has checkbox + AC

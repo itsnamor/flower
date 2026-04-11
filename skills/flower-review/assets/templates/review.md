@@ -7,11 +7,11 @@ createdAt: YYYY-MM-DD HH:MM
 
 ## Summary
 
-| Category      | BLOCKING | IMPORTANT | NICE-TO-HAVE |
-| ------------- | -------- | --------- | ------------ |
-| Quality       | --       | --        | --           |
-| Security      | --       | --        | --           |
-| Cross-cutting | --       | --        | --           |
+| Category      | CRITICAL | WARNING | SUGGESTION |
+| ------------- | -------- | ------- | ---------- |
+| Quality       | --       | --      | --         |
+| Security      | --       | --      | --         |
+| Cross-cutting | --       | --      | --         |
 
 **Overall:** <!-- PASS | PASS WITH NOTES | FAIL -->
 
@@ -158,19 +158,19 @@ createdAt: YYYY-MM-DD HH:MM
 
 ## Issues
 
-### BLOCKING
+### CRITICAL
 
 <!-- Must fix before proceeding -->
 
 None
 
-### IMPORTANT
+### WARNING
 
 <!-- Should fix, document reason if skipped -->
 
 None
 
-### NICE-TO-HAVE
+### SUGGESTION
 
 <!-- Optional improvements -->
 
@@ -180,6 +180,5 @@ None
 
 ## Sign-off
 
-- [ ] No BLOCKING issues
-- [ ] IMPORTANT issues addressed or documented
-- [ ] Ready for archive
+- [ ] No CRITICAL issues
+- [ ] WARNING issues addressed or documented

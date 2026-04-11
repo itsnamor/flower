@@ -78,7 +78,7 @@ If the request is vague, note specific gaps to address in clarification.
 
 ## Step 3: Gather Context
 
-### Codebase Search
+### Explore Codebase
 
 Use available tools to search for:
 
@@ -86,7 +86,7 @@ Use available tools to search for:
 - Similar features/patterns (Glob for file patterns)
 - Dependencies and integrations (check imports, configs)
 
-### Web Search (if applicable)
+### Explore Web (if applicable)
 
 Search for:
 
@@ -100,15 +100,15 @@ Document findings briefly. If no relevant context found, note "No existing conte
 
 ## Step 4: Clarify Loop
 
-**Maximum 4 iterations.** Each iteration: Ask → Receive → Analyze Again.
+**Maximum 4 iterations.** Present requirement and ask for feedback.
 
-The loop works as follows:
+### How It Works
 
-1. **Assess**: Determine if requirement is clear enough to proceed
-2. **Ask**: If unclear, ask ONE targeted question (or max 2-3 related)
-3. **Receive**: Get user's response
-4. **Analyze Again**: Incorporate new information, update What/Why/Who/Context
-5. **Repeat**: Assess again, exit when clear or max iterations reached
+1. **Present**: Show the drafted requirement
+2. **Ask**: "Does this requirement look clear? Any missing details?"
+3. **Receive**: Get user feedback
+4. **Refine**: Update requirement based on feedback
+5. **Repeat**: Ask again until approved or max iterations
 
 ### Question Guidelines
 
@@ -155,9 +155,10 @@ The loop works as follows:
 
 Exit the loop and proceed to Feasibility when ANY of these is true:
 
-- Requirement is clear enough
-- Iteration count = 4 (proceed with best understanding)
-- User asks to stop
+| Condition                 | Action                          |
+| ------------------------- | ------------------------------- |
+| User approves requirement | Proceed to Feasibility Check    |
+| Iteration count = 4       | Proceed with best understanding |
 
 ---
 
@@ -203,7 +204,7 @@ Load the appropriate template from `assets/templates/{type}.md`:
 
 1. Read the template file
 2. Fill in sections based on gathered information
-3. Set `createdAt` to current datetime (YYYY-MM-DD HH:MM)
+3. Set `createdAt` to current datetime (format: YYYY-MM-DD HH:MM)
 4. Set `title` to a clear, concise summary
 
 ### Output Location
@@ -227,8 +228,6 @@ Created: .agents/flower/250411-1430--add-user-auth/requirement.md
 
 Type: feature
 Summary: Add JWT-based user authentication with role-based access control
-
-Next: Run /flower:design to create technical design
 ```
 
 ---
