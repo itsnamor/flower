@@ -46,27 +46,11 @@ flowchart TD
 
 ## Step 1: Get Task Path
 
-**Check user input first.** Look for:
-
-- Full path: `.agents/flower/250411-1430--add-dark-mode-toggle`
-- Folder name: `250411-1430--add-dark-mode-toggle`
-- Partial match: `dark-mode`, `add-dark-mode`
-
-**If not found in input**, ask user:
-
-> "Which task are you working on? Provide the folder name or path."
->
-> Example: `250411-1430--add-dark-mode-toggle`
-
-**After user provides:**
-
-- Construct full path: `.agents/flower/{folder-name}`
-- Verify `requirement.md` exists
-- If not found, ask again
+Check user input for path, folder name, or partial match. Construct full path `.agents/flower/{folder-name}` and verify files exist. If not found, ask user.
 
 ---
 
-## Step 2: Read Requirement
+## Step 2: Read Documents
 
 Read `.agents/flower/{folder-name}/requirement.md`
 
@@ -235,49 +219,10 @@ Exit the loop and create plan.md when ANY of these is true:
 
 ### Load Template
 
-Read `assets/templates/plan.md`
-
-### Fill Content
-
-1. Set `title` matching the requirement
-2. Set `createdAt` to current datetime (format: YYYY-MM-DD HH:MM)
-3. Fill Overview with brief summary
-4. Fill Task Breakdown with phases and tasks
-5. Each task has checkbox + AC
-6. Fill Dependencies if relevant
-7. Fill Risks if relevant
-8. Fill Notes if needed
-
-### Write File
-
-Create at: `.agents/flower/{folder-name}/plan.md`
+Read `assets/templates/plan.md`, fill all sections (title, createdAt, Overview, Task Breakdown with checkboxes + AC, Dependencies, Risks, Notes). Write to `.agents/flower/{folder-name}/plan.md`.
 
 ---
 
 ## Output
 
-Inform user:
-
-- File created
-- Number of tasks and phases
-- Summary of plan
-
-Example:
-
-```
-Created: .agents/flower/250411-1430--add-dark-mode-toggle/plan.md
-
-Plan Summary:
-- 3 phases, 8 tasks
-- Phase 1: Setup (2 tasks)
-- Phase 2: Core Implementation (4 tasks)
-- Phase 3: Testing & Polish (2 tasks)
-
-Ready to implement. Start with task 1.1
-```
-
----
-
-## Template
-
-Located at `assets/templates/plan.md`:
+Inform user: file created, number of tasks and phases, summary of plan.

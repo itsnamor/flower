@@ -46,27 +46,11 @@ flowchart TD
 
 ## Step 1: Get Task Path
 
-**Check user input first.** Look for:
-
-- Full path: `.agents/flower/250411-1430--add-dark-mode-toggle`
-- Folder name: `250411-1430--add-dark-mode-toggle`
-- Partial match: `dark-mode`, `add-dark-mode`
-
-**If not found in input**, ask user:
-
-> "Which task are you working on? Provide the folder name or path."
->
-> Example: `250411-1430--add-dark-mode-toggle`
-
-**After user provides:**
-
-- Construct full path: `.agents/flower/{folder-name}`
-- Verify `requirement.md` exists
-- If not found, ask again
+Check user input for path, folder name, or partial match. Construct full path `.agents/flower/{folder-name}` and verify files exist. If not found, ask user.
 
 ---
 
-## Step 2: Read Requirement
+## Step 2: Read Documents
 
 Read `.agents/flower/{folder-name}/requirement.md`
 
@@ -188,49 +172,12 @@ Exit the loop and create design.md when ANY of these is true:
 
 ## Step 7: Create design.md
 
-### Load Template
-
-Read `assets/templates/design.md`
-
-### Fill Content
-
-1. Set `title` matching the requirement
-2. Set `createdAt` to current datetime (format: YYYY-MM-DD HH:MM)
-3. Fill all sections with drafted content
-4. Ensure task type-specific details are included
-
-### Write File
-
-Create at: `.agents/flower/{folder-name}/design.md`
+1. Read template from `assets/templates/design.md`
+2. Fill all sections with drafted content, set `title` and `createdAt`
+3. Write to `.agents/flower/{folder-name}/design.md`
 
 ---
 
 ## Output
 
-Inform user:
-
-- File created
-- Key decisions made
-- Summary of design
-
-Example:
-
-```
-Created: .agents/flower/250411-1430--add-dark-mode-toggle/design.md
-
-Key Decisions:
-- CSS variables for theming (simple, performant)
-- React Context for state (lightweight)
-- localStorage for persistence
-
-Design Summary:
-- Toggle component in header
-- System preference detection on mount
-- Smooth transition between modes
-```
-
----
-
-## Template
-
-Located at `assets/templates/design.md`:
+Inform user: file created, key decisions made, summary of design.

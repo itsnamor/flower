@@ -46,27 +46,11 @@ flowchart TD
 
 ## Step 1: Get Task Path
 
-**Check user input first.** Look for:
-
-- Full path: `.agents/flower/250411-1430--add-dark-mode-toggle`
-- Folder name: `250411-1430--add-dark-mode-toggle`
-- Partial match: `dark-mode`, `add-dark-mode`
-
-**If not found in input**, ask user:
-
-> "Which task are you working on? Provide the folder name or path."
->
-> Example: `250411-1430--add-dark-mode-toggle`
-
-**After user provides:**
-
-- Construct full path: `.agents/flower/{folder-name}`
-- Verify `requirement.md` and `plan.md` exist
-- If not found, ask again
+Check user input for path, folder name, or partial match. Construct full path `.agents/flower/{folder-name}` and verify files exist. If not found, ask user.
 
 ---
 
-## Step 2: Read All Documents
+## Step 2: Read Documents
 
 ### Read Order
 
@@ -118,21 +102,7 @@ Files to review:
 
 ## Step 4: Create review.md
 
-### Load Template
-
-Read `assets/templates/review.md`
-
-### Fill Content
-
-1. Set `title` matching the task
-2. Set `createdAt` to current datetime (format: YYYY-MM-DD HH:MM)
-3. List all files to review
-4. Keep all checks as `pending`
-5. Leave notes empty
-
-### Write File
-
-Create at: `.agents/flower/{folder-name}/review.md`
+Read `assets/templates/review.md`, fill sections (title, createdAt, list files to review, keep checks as pending). Write to `.agents/flower/{folder-name}/review.md`.
 
 ---
 
@@ -291,51 +261,31 @@ Check for:
 
 **This step is mandatory after reviewing each file.**
 
-### Update Process
+Update `.agents/flower/{folder-name}/review.md` matching template format:
 
-After reviewing each file, immediately update `.agents/flower/{folder-name}/review.md`:
-
-1. Find the corresponding file section
-2. Fill quality check results
-3. Fill security check results
-4. Add findings to Issues section with severity
-
-### Example Update
-
-**Quality:**
+**Passed:**
 
 ```markdown
-### src/components/ThemeToggle.tsx
-
-#### Quality
-
-- [x] DRY - No duplicate code
+- [x] Check name
   - Status: passed
-  - Notes: No duplicates found
-
-- [x] KISS - Simple and readable
-  - Status: passed
-  - Notes: Clean component, 45 lines, well-organized
-
-#### Security
-
-- [x] No hardcoded secrets
-  - Status: passed
-  - Notes: Uses environment variable for API key
-
-- [ ] Input validation
-  - Status: N/A
-  - Notes: No user input in this file
+  - Notes: description
 ```
 
-**Issues:**
+**Failed:**
+
+```markdown
+- [x] Check name
+  - Status: failed
+  - Notes: reason + recommendation
+```
+
+Add issues to Issues section, replacing "None" with:
 
 ```markdown
 ### CRITICAL
 
-- **src/contexts/ThemeContext.tsx:15** - Hardcoded API key
-  - Issue: API key hardcoded in source
-  - Fix: Move to environment variable
+- **file:line** - Issue description
+  - Fix: recommended fix
 ```
 
 ---
@@ -496,14 +446,4 @@ Summary:
 
 ## Output
 
-After completion, inform user:
-
-- File location
-- Summary table
-- Issues by severity (CRITICAL/WARNING/SUGGESTION)
-
----
-
-## Template
-
-Located at `assets/templates/review.md`.
+Inform user: file location, summary table, issues by severity.

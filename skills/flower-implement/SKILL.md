@@ -40,27 +40,11 @@ flowchart TD
 
 ## Step 1: Get Task Path
 
-**Check user input first.** Look for:
-
-- Full path: `.agents/flower/250411-1430--add-dark-mode-toggle`
-- Folder name: `250411-1430--add-dark-mode-toggle`
-- Partial match: `dark-mode`, `add-dark-mode`
-
-**If not found in input**, ask user:
-
-> "Which task are you working on? Provide the folder name or path."
->
-> Example: `250411-1430--add-dark-mode-toggle`
-
-**After user provides:**
-
-- Construct full path: `.agents/flower/{folder-name}`
-- Verify `requirement.md` and `plan.md` exist
-- If not found, ask again
+Check user input for path, folder name, or partial match. Construct full path `.agents/flower/{folder-name}` and verify files exist. If not found, ask user.
 
 ---
 
-## Step 2: Read All Documents
+## Step 2: Read Documents
 
 ### Read Order
 
@@ -154,36 +138,12 @@ Always follow these principles:
 
 **This step is mandatory after each task.**
 
-### Update Process
-
-After completing a task, immediately update `.agents/flower/{folder-name}/plan.md`:
-
-1. Find the corresponding task checkbox
-2. Change `- [ ]` to `- [x]`
-3. Save the file
-
-### Example Update
-
-Before:
+Update `.agents/flower/{folder-name}/plan.md`: change completed task checkbox from `- [ ]` to `- [x]`, keep AC line unchanged.
 
 ```markdown
-- [ ] 1.1 Create ThemeContext
-  - AC: Context provides theme state and toggle function
+- [x] 1.1 Task description
+  - AC: Acceptance criteria
 ```
-
-After:
-
-```markdown
-- [x] 1.1 Create ThemeContext
-  - AC: Context provides theme state and toggle function
-```
-
-### Why Mandatory
-
-- Tracks implementation progress
-- Provides visibility into completion status
-- Enables resuming from last checkpoint
-- Documents what's done
 
 ---
 
@@ -282,8 +242,4 @@ Files:
 
 ## Output
 
-After completion, inform user:
-
-- Summary of work done
-- Files changed
-- Tests status
+Inform user: summary of work done, files changed, tests status.

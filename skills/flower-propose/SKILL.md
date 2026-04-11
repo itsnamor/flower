@@ -113,43 +113,10 @@ Document findings briefly. If no relevant context found, note "No existing conte
 ### Question Guidelines
 
 - Prefer closed questions (Yes/No, multiple choice) over open-ended
-- One question at a time, or max 2-3 related questions together
-- Use information from context gathering to avoid asking what's already known
+- Provide options when possible (e.g., "Impact: low/medium/high?")
+- One question at a time, or max 2-3 related questions
+- Use context from exploration to avoid asking known info
 - Stop early if requirement is clear
-
-### Example Questions by Type
-
-**feature**:
-
-- "Should this be available to all users or specific roles?"
-- "What happens when [edge case]?"
-- "Is this blocking or non-blocking?"
-
-**bug**:
-
-- "Does this happen consistently or intermittently?"
-- "When did this start happening?"
-- "What's the impact: low/medium/high?"
-
-**improve**:
-
-- "What metric should improve? (e.g., load time, memory, UX)"
-- "Is backward compatibility required?"
-
-**refactor**:
-
-- "What's triggering this refactor? (tech debt, performance, readability)"
-- "Are there any behavioral changes, even minor ones?"
-
-**setup**:
-
-- "Is this for development or production?"
-- "Any specific version requirements?"
-
-**explore**:
-
-- "What decision depends on this investigation?"
-- "How much time should we spend?"
 
 ### Exit Conditions
 
@@ -181,64 +148,13 @@ Perform a quick assessment:
 
 ## Step 6: Create requirement.md
 
-### Folder Name Format
-
-`{YYMMDD-HHMM}--{short-desc}`
-
-Example: `250411-1430--add-user-auth`
-
-### Template Selection
-
-Load the appropriate template from `assets/templates/{type}.md`:
-
-| Type     | Template      |
-| -------- | ------------- |
-| feature  | `feature.md`  |
-| bug      | `bug.md`      |
-| improve  | `improve.md`  |
-| refactor | `refactor.md` |
-| setup    | `setup.md`    |
-| explore  | `explore.md`  |
-
-### Fill Template
-
-1. Read the template file
-2. Fill in sections based on gathered information
-3. Set `createdAt` to current datetime (format: YYYY-MM-DD HH:MM)
-4. Set `title` to a clear, concise summary
-
-### Output Location
-
-Create the file at `.agents/flower/{folder-name}/requirement.md`
+1. Read template from `assets/templates/{type}.md` (feature/bug/improve/refactor/setup/explore)
+2. Fill sections based on gathered information
+3. Set `createdAt` (YYYY-MM-DD HH:MM) and `title`
+4. Write to `.agents/flower/{YYMMDD-HHMM}--{short-desc}/requirement.md`
 
 ---
 
 ## Output
 
-After creating the file, inform the user:
-
-- The created file path
-- A brief summary of what was captured
-- The classified type
-
-Example:
-
-```
-Created: .agents/flower/250411-1430--add-user-auth/requirement.md
-
-Type: feature
-Summary: Add JWT-based user authentication with role-based access control
-```
-
----
-
-## Templates
-
-Located in `assets/templates/`:
-
-- `feature.md` - New capabilities
-- `bug.md` - Bug fixes
-- `improve.md` - Improvements
-- `refactor.md` - Code refactoring
-- `setup.md` - Setup/configuration
-- `explore.md` - Investigations
+Inform user: file path, classified type, brief summary.

@@ -45,27 +45,11 @@ flowchart TD
 
 ## Step 1: Get Task Path
 
-**Check user input first.** Look for:
-
-- Full path: `.agents/flower/250411-1430--add-dark-mode-toggle`
-- Folder name: `250411-1430--add-dark-mode-toggle`
-- Partial match: `dark-mode`, `add-dark-mode`
-
-**If not found in input**, ask user:
-
-> "Which task are you working on? Provide the folder name or path."
->
-> Example: `250411-1430--add-dark-mode-toggle`
-
-**After user provides:**
-
-- Construct full path: `.agents/flower/{folder-name}`
-- Verify `requirement.md` and `plan.md` exist
-- If not found, ask again
+Check user input for path, folder name, or partial match. Construct full path `.agents/flower/{folder-name}` and verify files exist. If not found, ask user.
 
 ---
 
-## Step 2: Read All Documents
+## Step 2: Read Documents
 
 ### Read Order
 
@@ -134,20 +118,7 @@ Incomplete tasks:
 
 **This step is mandatory after completeness check.**
 
-### Create verify.md
-
-If not exists, read template from `assets/templates/verify.md` and create:
-
-`.agents/flower/{folder-name}/verify.md`
-
-### Update Completeness Section
-
-Fill the Completeness section with:
-
-- Task count
-- Completion percentage
-- List of incomplete tasks (if any)
-- Issue level (pass/warning/critical)
+If not exists, read `assets/templates/verify.md` and create `.agents/flower/{folder-name}/verify.md`. Fill Completeness section: task count, completion percentage, incomplete tasks, issue level.
 
 ---
 
@@ -249,26 +220,28 @@ For each AC, report:
 
 **This step is mandatory after each AC test.**
 
-### Update Correctness Section
+Update `.agents/flower/{folder-name}/verify.md` matching template format:
 
-For each AC tested, update verify.md:
+**Passed:**
 
 ```markdown
-- [x] AC1: User can toggle dark mode
+- [x] AC1: acceptance criteria
   - Status: passed
-  - Method: Manual UI test
-  - Files: src/components/ThemeToggle.tsx
-  - Notes: Clicked toggle, theme changed. Tested Chrome/Firefox.
+  - Method: Static Analysis | Dynamic Testing | Test Suite
+  - Files: implementing files
+  - Evidence: specific findings
+  - Notes: observations
 ```
 
-Or if failed:
+**Failed:**
 
 ```markdown
-- [ ] AC3: Theme persists on refresh
+- [ ] AC1: acceptance criteria
   - Status: failed
-  - Method: Manual UI test
-  - Files: src/contexts/ThemeContext.tsx
-  - Notes: Theme resets to default on page refresh. localStorage not being read.
+  - Method: ...
+  - Files: ...
+  - Evidence: what was expected vs found
+  - Notes: reason for failure
 ```
 
 ---
@@ -297,22 +270,26 @@ For each design decision:
 
 ### Report Coherence
 
-For each decision:
+For each design decision matching template format:
+
+**Followed:**
 
 ```markdown
-- [x] Use React Context for theme state
+- [x] Design decision
   - Status: followed
-  - Evidence: src/contexts/ThemeContext.tsx implements Context API
+  - Evidence: specific findings
+  - Files: implementing files
+  - Notes: observations
 ```
 
-If violated:
+**Violated:**
 
 ```markdown
-- [ ] Store preference in localStorage
+- [ ] Design decision
   - Status: violated
-  - Expected: localStorage.setItem/getItem calls
-  - Found: No localStorage usage
-  - Recommendation: Implement localStorage persistence or update design.md
+  - Evidence: expected vs found
+  - Files: implementing files
+  - Notes: recommendation
 ```
 
 ### Check Code Pattern Consistency
@@ -422,14 +399,4 @@ Issues: [count] CRITICAL, [count] WARNING, [count] SUGGESTION
 
 ## Output
 
-After completion, inform user:
-
-- File location
-- Summary table
-- Issue count by level
-
----
-
-## Template
-
-Located at `assets/templates/verify.md`.
+Inform user: file location, summary table, issue count by level.
