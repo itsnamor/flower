@@ -14,6 +14,7 @@ createdAt: YYYY-MM-DD HH:MM
 <!-- List important technical decisions and rationale. -->
 
 ### Decision 1: <!-- Title -->
+
 - **Context**: <!-- Why this decision was needed -->
 - **Decision**: <!-- What was decided -->
 - **Rationale**: <!-- Why this approach -->

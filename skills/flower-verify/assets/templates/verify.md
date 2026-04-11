@@ -7,31 +7,124 @@ createdAt: YYYY-MM-DD HH:MM
 
 ## Summary
 
-<!-- Overall verification status -->
+| Dimension    | Status |
+| ------------ | ------ |
+| Completeness | --/--  |
+| Correctness  | --/--  |
+| Coherence    | --     |
 
-## Acceptance Criteria Tests
+**Overall:** <!-- PASS | PASS WITH WARNINGS | FAIL -->
 
-### From Requirement
+---
 
-- [ ] AC1: <!-- Acceptance criteria -->
+## 1. Completeness
+
+**Question:** Are all tasks from plan.md complete?
+
+### Task Completion
+
+- Total tasks: --
+- Complete: --
+- Incomplete: --
+
+### Incomplete Tasks
+
+<!-- List incomplete tasks or "None" -->
+
+- [ ] Task X.X: <!-- task description -->
+
+### Status
+
+<!-- PASS | WARNING | CRITICAL -->
+
+---
+
+## 2. Correctness
+
+**Question:** Does implementation satisfy all acceptance criteria?
+
+### Acceptance Criteria Tests
+
+#### From requirement.md
+
+- [ ] AC1: <!-- acceptance criteria -->
   - Status: <!-- pending | passed | failed -->
-  - Notes: <!-- Test notes -->
+  - Method: <!-- testing method -->
+  - Files: <!-- implementing files -->
+  - Notes:
 
-- [ ] AC2: <!-- Acceptance criteria -->
-  - Status: <!-- pending | passed | failed -->
-  - Notes: <!-- Test notes -->
+- [ ] AC2: <!-- acceptance criteria -->
+  - Status: pending
+  - Method:
+  - Files:
+  - Notes:
 
-### From Design
+### Status
 
-- [ ] DC1: <!-- Design criteria -->
-  - Status: <!-- pending | passed | failed -->
-  - Notes: <!-- Test notes -->
+<!-- PASS | CRITICAL -->
 
-## Issues Found
+---
 
-<!-- List of issues discovered during testing -->
+## 3. Coherence
+
+**Question:** Does implementation follow design decisions?
+
+<!-- Skip this section if no design.md -->
+
+### Design Decisions Check
+
+- [ ] <!-- Design decision 1 -->
+  - Status: <!-- pending | followed | violated -->
+  - Evidence:
+  - Files:
+  - Notes:
+
+- [ ] <!-- Design decision 2 -->
+  - Status: pending
+  - Evidence:
+  - Files:
+  - Notes:
+
+### Pattern Consistency
+
+- [ ] Naming follows project conventions
+  - Status: pending
+  - Notes:
+
+- [ ] File structure follows project patterns
+  - Status: pending
+  - Notes:
+
+### Status
+
+<!-- PASS | WARNING | SUGGESTION -->
+
+---
+
+## Issues
+
+### CRITICAL
+
+<!-- Must fix before proceeding -->
+
+None
+
+### WARNING
+
+<!-- Should fix, document reason if skipped -->
+
+None
+
+### SUGGESTION
+
+<!-- Nice to fix, optional -->
+
+None
+
+---
 
 ## Sign-off
 
-- [ ] All acceptance criteria passed
-- [ ] No blocking issues remaining
+- [ ] No CRITICAL issues
+- [ ] All CRITICAL issues documented with reason
+- [ ] Ready for flower-review

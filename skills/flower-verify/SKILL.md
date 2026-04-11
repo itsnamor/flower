@@ -1,11 +1,11 @@
 ---
 name: flower-verify
-description: Verify implementation against acceptance criteria from requirement.md and design.md. Create verify.md checklist, test each AC, and update results. Triggers on 'verify', 'test', 'validate', 'check implementation'.
+description: Verify implementation completeness, correctness, and coherence. Check plan tasks completion, test acceptance criteria, and verify design adherence. Triggers on 'verify', 'test', 'validate', 'check implementation'.
 ---
 
 # Flower Verify
 
-Verify implementation against acceptance criteria.
+Verify implementation is complete, correct, and coherent.
 
 ## Workflow
 
@@ -13,33 +13,33 @@ Verify implementation against acceptance criteria.
 flowchart TD
     A[Check Input for Task] --> B{Path found?}
     B -->|No| C[Ask user for path]
-    C --> D[Read requirement.md]
+    C --> D[Read all docs]
     B -->|Yes| D
 
-    D --> E[Read design.md if exists]
-    E --> F[Extract all AC]
-    F --> G[Create verify.md]
-
-    G --> H[Create Todo List]
-    H --> I[Test AC one by one]
-    I --> J[Update verify.md]
-    J --> K{More AC?}
-
-    K -->|Yes| I
-    K -->|No| L[Final Summary]
-    L --> M[Done]
+    D --> E[Check Completeness]
+    E --> F[Update verify.md]
+    F --> G[Check Correctness]
+    G --> H[Update verify.md]
+    H --> I{design.md exists?}
+    I -->|Yes| J[Check Coherence]
+    I -->|No| K[Skip Coherence]
+    J --> L[Update verify.md]
+    K --> L
+    L --> M[Final Summary]
+    M --> N[Done]
 ```
 
-| Step | Action                       |
-| ---- | ---------------------------- |
-| 1    | Get Task Path                |
-| 2    | Read Requirement & Design    |
-| 3    | Extract Acceptance Criteria  |
-| 4    | Create verify.md             |
-| 5    | Create Todo List             |
-| 6    | Test Each AC                 |
-| 7    | Update verify.md (MANDATORY) |
-| 8    | Final Summary                |
+|     | Step                         | Action |
+| --- | ---------------------------- | ------ |
+| 1   | Get Task Path                |
+| 2   | Read All Documents           |
+| 3   | Check Completeness           |
+| 4   | Update verify.md (MANDATORY) |
+| 5   | Check Correctness            |
+| 6   | Update verify.md (MANDATORY) |
+| 7   | Check Coherence (if design)  |
+| 8   | Update verify.md (MANDATORY) |
+| 9   | Final Summary                |
 
 ---
 
@@ -65,216 +65,316 @@ flowchart TD
 
 ---
 
-## Step 2: Read Requirement & Design
+## Step 2: Read All Documents
 
-### Read Requirement
+### Read Order
 
-Read `.agents/flower/{folder-name}/requirement.md`
+1. **requirement.md** - Understand what to build
+2. **design.md** (if exists) - Understand how to build
+3. **plan.md** - See task breakdown
 
-Extract:
+### Extract Information
 
-- All acceptance criteria listed
+**From requirement.md:**
+
 - Task type
+- All acceptance criteria
 - Scope and constraints
 
-### Read Design (if exists)
+**From design.md (if exists):**
 
-Read `.agents/flower/{folder-name}/design.md` if present.
+- Key decisions
+- Architecture choices
+- Implementation details
 
-Extract:
+**From plan.md:**
 
-- Key decisions that need verification
-- Implementation details to check
-- Any specific test scenarios
+- All tasks with checkboxes
+- Task breakdown structure
 
 ---
 
-## Step 3: Extract Acceptance Criteria
+## Step 3: Check Completeness
 
-### From Requirement
+**Question:** Are all tasks from plan.md complete?
 
-Look for sections like:
+### Count Tasks
 
-- "Acceptance Criteria" with checkboxes
-- "AC1:", "AC2:", etc.
-- Success criteria
+Read plan.md and count:
 
-### From Design
+- Tasks marked `- [x]` (complete)
+- Tasks marked `- [ ]` (incomplete)
+
+### Report Completion
+
+If all tasks complete:
+
+```
+Completeness: N/N tasks complete ✓
+```
+
+If incomplete tasks found:
+
+```
+Completeness: X/N tasks complete ⚠️
+
+Incomplete tasks:
+- [ ] Task 1.2: Create component
+- [ ] Task 3.1: Add tests
+```
+
+### Issue Level
+
+- All complete → Pass
+- Some incomplete → **WARNING** (if minor) or **CRITICAL** (if core tasks missing)
+
+---
+
+## Step 4: Update verify.md (MANDATORY)
+
+**This step is mandatory after completeness check. Never skip.**
+
+### Create verify.md
+
+If not exists, read template from `assets/templates/verify.md` and create:
+
+`.agents/flower/{folder-name}/verify.md`
+
+### Update Completeness Section
+
+Fill the Completeness section with:
+
+- Task count
+- Completion percentage
+- List of incomplete tasks (if any)
+- Issue level (pass/warning/critical)
+
+---
+
+## Step 5: Check Correctness
+
+**Question:** Does implementation satisfy all acceptance criteria?
+
+### Extract AC from requirement.md
 
 Look for:
 
-- Key decisions that should be reflected in code
-- Implementation details mentioned
-- Specific behaviors described
+- "Acceptance Criteria" section
+- "AC1:", "AC2:", etc.
+- Success criteria checkboxes
 
-### Combine into Test List
+### Test Each AC
 
-Create a unified list of all items to verify:
+For each acceptance criteria:
 
-- AC from requirement (mandatory)
-- Design decisions (if design exists)
-- Edge cases mentioned
+1. **Identify test method** based on AC type:
 
----
+   | AC Type         | Testing Method                |
+   | --------------- | ----------------------------- |
+   | UI behavior     | Run app, manually test        |
+   | API response    | Make API call, check response |
+   | Data validation | Test with valid/invalid data  |
+   | Error handling  | Trigger error, check handling |
+   | Performance     | Measure and compare           |
+   | Integration     | Test with external systems    |
 
-## Step 4: Create verify.md
+2. **Perform test**
+3. **Document result**
+4. **Continue to next AC**
 
-### Load Template
+### Report Correctness
 
-Read `assets/templates/verify.md`
+For each AC, report:
 
-### Fill Content
+- Status: passed / failed
+- Evidence: What was tested, how
+- Files: Which files implement this AC
 
-1. Set `title` matching the requirement
-2. Set `createdAt` to current datetime
-3. List all AC from requirement under "From Requirement"
-4. List design criteria under "From Design" (if applicable)
-5. Set all status to `pending`
-6. Leave notes empty
+### Issue Level
 
-### Write File
-
-Create at: `.agents/flower/{folder-name}/verify.md`
-
----
-
-## Step 5: Create Todo List
-
-Use the `todos` tool to track testing progress.
-
-Create one todo item for each acceptance criteria:
-
-```
-- Test AC1: [description] (pending)
-- Test AC2: [description] (pending)
-- Test DC1: [design criteria] (pending)
-```
-
-Mark first item as `in_progress` before testing.
+- All passed → Pass
+- Some failed → **CRITICAL** (AC not satisfied)
 
 ---
 
-## Step 6: Test Each AC
+## Step 6: Update verify.md (MANDATORY)
 
-### Testing Approach
+**This step is mandatory after each AC test. Never skip.**
 
-For each acceptance criteria, determine how to test:
+### Update Correctness Section
 
-| AC Type         | Testing Method                |
-| --------------- | ----------------------------- |
-| UI behavior     | Run app, manually test        |
-| API response    | Make API call, check response |
-| Data validation | Test with valid/invalid data  |
-| Error handling  | Trigger error, check handling |
-| Performance     | Measure and compare           |
-| Integration     | Test with external systems    |
-
-### Testing Process
-
-For each AC:
-
-1. **Mark as in_progress** in todo list
-2. **Perform test** - run code, make requests, check behavior
-3. **Document result** - passed, failed, or issues found
-4. **Update verify.md** (MANDATORY - see Step 7)
-5. **Mark as completed** in todo list
-6. **Move to next AC**
-
-### Test Documentation
-
-For each test, note:
-
-- What was tested
-- How it was tested
-- Result (passed/failed)
-- Any issues or observations
-
----
-
-## Step 7: Update verify.md (MANDATORY)
-
-**This step is mandatory after each test. Never skip.**
-
-### After Each Test
-
-Immediately update `.agents/flower/{folder-name}/verify.md`:
-
-1. Find the corresponding AC in the file
-2. Update checkbox: `[ ]` → `[x]` if passed
-3. Update status: `pending` → `passed` or `failed`
-4. Add notes: What was tested, result, any observations
-
-### Example Update
-
-Before:
-
-```markdown
-- [ ] AC1: User can toggle dark mode
-  - Status: pending
-  - Notes:
-```
-
-After (passed):
+For each AC tested, update verify.md:
 
 ```markdown
 - [x] AC1: User can toggle dark mode
   - Status: passed
-  - Notes: Clicked toggle, theme changed immediately. Tested in Chrome and Firefox.
+  - Method: Manual UI test
+  - Files: src/components/ThemeToggle.tsx
+  - Notes: Clicked toggle, theme changed. Tested Chrome/Firefox.
 ```
 
-After (failed):
+Or if failed:
 
 ```markdown
-- [ ] AC1: User can toggle dark mode
+- [ ] AC3: Theme persists on refresh
   - Status: failed
-  - Notes: Toggle click not responding. Button event listener not attached.
+  - Method: Manual UI test
+  - Files: src/contexts/ThemeContext.tsx
+  - Notes: Theme resets to default on page refresh. localStorage not being read.
 ```
-
-### Why Mandatory
-
-- Ensures verification progress is tracked
-- Provides audit trail of testing
-- Prevents skipping tests
-- Documents issues found
 
 ---
 
-## Step 8: Final Summary
+## Step 7: Check Coherence (if design.md exists)
 
-After all ACs tested:
+**Question:** Does implementation follow design decisions?
+
+**Skip this step if design.md does not exist.**
+
+### Extract Design Decisions
+
+From design.md, extract:
+
+- Key decisions (e.g., "Use React Context for state")
+- Architecture choices (e.g., "CSS variables for theming")
+- Implementation details (e.g., "Store preference in localStorage")
+
+### Verify Each Decision
+
+For each design decision:
+
+1. **Search codebase** for implementation
+2. **Check if decision is followed**
+3. **Document evidence**
+
+### Report Coherence
+
+For each decision:
+
+```markdown
+- [x] Use React Context for theme state
+  - Status: followed
+  - Evidence: src/contexts/ThemeContext.tsx implements Context API
+```
+
+If violated:
+
+```markdown
+- [ ] Store preference in localStorage
+  - Status: violated
+  - Expected: localStorage.setItem/getItem calls
+  - Found: No localStorage usage
+  - Recommendation: Implement localStorage persistence or update design.md
+```
+
+### Check Code Pattern Consistency
+
+Check if new code follows existing project patterns:
+
+- Naming conventions
+- File structure
+- Import patterns
+- Code style
+
+### Issue Level
+
+- All followed → Pass
+- Some violated → **WARNING** (design mismatch)
+- Pattern inconsistencies → **SUGGESTION**
+
+---
+
+## Step 8: Update verify.md (MANDATORY)
+
+**This step is mandatory after coherence check. Never skip.**
+
+### Update Coherence Section
+
+Fill the Coherence section with:
+
+- Design decisions check results
+- Pattern consistency findings
+- Issue level for each finding
+
+---
+
+## Step 9: Final Summary
+
+### Calculate Overall Status
+
+| Dimension    | Status                      |
+| ------------ | --------------------------- |
+| Completeness | Pass / WARNING / CRITICAL   |
+| Correctness  | Pass / CRITICAL             |
+| Coherence    | Pass / WARNING / SUGGESTION |
+
+### Determine Recommendation
+
+**If CRITICAL issues found:**
+
+```
+VERIFICATION FAILED
+
+Critical issues:
+- [list critical issues]
+
+Fix before proceeding to review.
+```
+
+**If only WARNING/SUGGESTION:**
+
+```
+VERIFICATION PASSED (with notes)
+
+Warnings:
+- [list warnings]
+
+Suggestions:
+- [list suggestions]
+
+Ready for review (consider addressing warnings).
+```
+
+**If all pass:**
+
+```
+VERIFICATION PASSED
+
+All checks passed. Ready for review.
+```
 
 ### Update verify.md Summary
 
-1. Count passed vs failed
-2. List issues found
+1. Fill summary section with overall status
+2. List all issues categorized by level
 3. Update sign-off section
 
 ### Report to User
 
-Inform user:
-
-- Total ACs tested
-- Pass count
-- Fail count
-- Issues found
-- Recommendation
-
-Example:
-
 ```
-Verification Complete: .agents/flower/250411-1430--add-dark-mode-toggle/verify.md
+Verification Complete: .agents/flower/{folder-name}/verify.md
 
-Results:
-- Total: 8 acceptance criteria
-- Passed: 6
-- Failed: 2
+Summary:
+| Dimension    | Status      |
+|--------------|-------------|
+| Completeness | N/N tasks   |
+| Correctness  | X/Y ACs     |
+| Coherence    | Followed    |
 
-Issues Found:
-1. AC3: Toggle state not persisted on refresh
-2. AC7: Transition not smooth on Safari
+Issues: [count] CRITICAL, [count] WARNING, [count] SUGGESTION
 
-Recommendation: Fix issues before marking complete.
+Recommendation: [recommendation]
 ```
+
+---
+
+## Issue Levels
+
+| Level      | Meaning                    | Action                           |
+| ---------- | -------------------------- | -------------------------------- |
+| CRITICAL   | Must fix before proceeding | Stop, fix immediately            |
+| WARNING    | Should fix                 | Fix if possible, document reason |
+| SUGGESTION | Nice to fix                | Optional, can skip               |
 
 ---
 
@@ -283,12 +383,12 @@ Recommendation: Fix issues before marking complete.
 After completion, inform user:
 
 - File location
-- Test results summary
-- Issues found (if any)
-- Next steps recommendation
+- Summary table
+- Issue count by level
+- Recommendation
 
 ---
 
 ## Template
 
-Located at `assets/templates/verify.md`:
+Located at `assets/templates/verify.md`.
