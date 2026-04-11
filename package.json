@@ -1,8 +1,8 @@
 {
   "name": "flower",
-  "module": "index.ts",
-  "type": "module",
   "private": true,
+  "type": "module",
+  "module": "index.ts",
   "devDependencies": {
     "@types/bun": "latest"
   },

@@ -1,0 +1,47 @@
+{
+  "skill_name": "flower-propose",
+  "evals": [
+    {
+      "id": 1,
+      "name": "feature-request",
+      "prompt": "I want to add a dark mode toggle to my React app. Users have been asking for it because it reduces eye strain at night.",
+      "expected_output": "Creates requirement.md with type: feature, user story, acceptance criteria, and proper folder naming",
+      "assertions": [
+        "File created at .agents/flower/YYMMDD-HHMM--add-dark-mode-toggle/requirement.md or similar",
+        "Frontmatter contains type: feature",
+        "Frontmatter contains createdAt field",
+        "User story section exists with 'As a... I want... so that...' format",
+        "Acceptance criteria section exists with checkboxes"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "bug-report",
+      "prompt": "The login button doesn't work on mobile. When I tap it, nothing happens. It works fine on desktop though.",
+      "expected_output": "Creates requirement.md with type: bug, reproduce steps, expected vs actual behavior",
+      "assertions": [
+        "File created at .agents/flower/YYMMDD-HHMM--fix-login-mobile/requirement.md or similar",
+        "Frontmatter contains type: bug",
+        "Reproduce steps section exists with numbered steps",
+        "Expected behavior section exists",
+        "Actual behavior section exists"
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "explore-request",
+      "prompt": "How does the current authentication flow work? I need to understand it before adding 2FA.",
+      "expected_output": "Creates requirement.md with type: explore, question, scope, timebox",
+      "assertions": [
+        "File created at .agents/flower/YYMMDD-HHMM--explore-auth-flow/requirement.md or similar",
+        "Frontmatter contains type: explore",
+        "Question section exists",
+        "Scope section with In Scope and Out of Scope",
+        "Timebox section exists"
+      ],
+      "files": []
+    }
+  ]
+}
