@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { defineCommand, runMain } from "citty";
 import { intro, outro } from "@clack/prompts";
 
