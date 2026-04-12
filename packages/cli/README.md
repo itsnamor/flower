@@ -1,86 +1,115 @@
 # @flowrr/cli
 
-[![npm version](https://img.shields.io/npm/v/@flowrr/cli.svg)](https://www.npmjs.com/package/@flowrr/cli)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+🌸 CLI for flower - scaffold structured development workflows in your project.
 
-CLI for Flower — scaffold structured development workflows in your project.
-
-## Features
-
-- ✅ **Setup** — Initialize Flower in any project with a single command.
-- ✅ **Doctor** — Validate your setup integrity and troubleshooting.
-- ✅ **Multi-runtime** — First-class support for Bun, Node.js, and Pnpm.
-
-## Quick Start
-
-### Prerequisites
-
-- [Bun](https://bun.sh) 1.0+, Node.js 18+, or Pnpm 8+
-
-### Installation
+## Installation
 
 ```bash
-# Using bun (recommended)
-bun add -g @flowrr/cli
-
-# Using npm
 npm install -g @flowrr/cli
-
-# Using pnpm
-pnpm add -g @flowrr/cli
+# or
+yarn global add @flowrr/cli
+# or
+bun install -g @flowrr/cli
 ```
 
-### Basic Usage
+## Usage
 
 ```bash
-flower [command] [options]
+flower <command> [options]
 ```
 
 ## Commands
 
-| Command   | Description                             |
-| --------- | --------------------------------------- |
-| `setup`   | Initialize Flower in your project       |
-| `doctor`  | Check Flower setup integrity and health |
-| `version` | Display the current CLI version         |
-| `--help`  | Show help for any command               |
+### `flower setup`
 
-### `setup`
-
-Initializes the Flower environment in your current working directory.
+Set up Flower in your project. Copies the skill files to `.agents/skills/` in your project directory.
 
 ```bash
-flower setup [options]
-
-# Options
--f, --force    Force setup even if already initialized
-```
-
-### `doctor`
-
-Runs a diagnostic check on your local Flower configuration to ensure everything is wired correctly.
-
-```bash
-flower doctor
-```
-
-## Examples
-
-```bash
-# Initialize a new project
 flower setup
+```
 
-# Verify installation health
+**Options:**
+
+- `-f, --force` - Force setup even if already initialized (will overwrite existing files)
+
+### `flower doctor`
+
+Check Flower setup integrity. Verifies that all expected skills are present and haven't been modified.
+
+```bash
 flower doctor
+```
 
-# Show version
+Checks:
+
+- Directory structure (`.agents/skills/` exists)
+- All expected skills are present
+- All skills have a `SKILL.md` file
+- File integrity (compares against original files)
+
+### `flower version`
+
+Display the current version.
+
+```bash
 flower version
 ```
 
-## Support
+## What is flower?
 
-- 🐛 [Issue Tracker](https://github.com/itsflower/flower/issues)
-- 📖 [Documentation](https://itsflower.dev)
+`flower` is a structured development workflow system that provides AI-assisted skills for:
+
+- **flower-design** - Design and architecture planning
+- **flower-plan** - Task planning and breakdown
+- **flower-propose** - Propose solutions and approaches
+- **flower-review** - Code and design review
+- **flower-implement** - Implementation guidance
+- **flower-verify** - Verification and testing
+
+When you run `flower setup`, these skills are copied to your project's `.agents/skills/` directory where they can be used by AI assistants.
+
+## Directory Structure
+
+After running `flower setup`, your project will have:
+
+```
+your-project/
+├── .agents/
+│   └── skills/
+│       ├── flower-design/
+│       │   └── SKILL.md
+│       ├── flower-plan/
+│       │   ├── SKILL.md
+│       │   └── assets/
+│       ├── flower-propose/
+│       │   ├── SKILL.md
+│       │   └── assets/
+│       ├── flower-review/
+│       │   ├── SKILL.md
+│       │   └── assets/
+│       ├── flower-implement/
+│       │   └── SKILL.md
+│       └── flower-verify/
+│           ├── SKILL.md
+│           └── assets/
+└── ...
+```
+
+## Development
+
+```bash
+# Install dependencies
+bun install
+
+# Run in development mode
+bun run dev
+
+# Build for production
+bun run build
+
+# Type check
+bun run typecheck
+```
 
 ## License
 
