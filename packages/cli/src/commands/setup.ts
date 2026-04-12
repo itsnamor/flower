@@ -1,37 +1,47 @@
 import { defineCommand } from "citty";
 import { intro, outro, spinner, log, confirm } from "@clack/prompts";
 
-import { SKILLS_DIR, TARGET_DIR } from "$lib/constants";
-import { getSkillsSourceDir, getTargetSkillsDir } from "$lib/paths";
-import { hasContent, listFiles, copyDir } from "$lib/fs";
+import { SKILLS_DIR, TARGET_DIR, COMMANDS_TARGET_SUBDIR } from "$lib/constants";
+import {
+  getSkillsSourceDir,
+  getTargetSkillsDir,
+  getCommandsSourceDir,
+  getTargetCommandsDir,
+} from "$lib/paths";
+import { hasContent, listSkills, copyDir, pathExists } from "$lib/fs";
 import { getErrorMessage } from "$/utils/error";
 
 export default defineCommand({
-  meta: { name: "setup", description: "Set up `flower` in your project" },
+  meta: { name: "setup", description: "Set up flower in your project" },
   args: {
     force: {
       type: "boolean",
       alias: "f",
-      description: "Force setup even if already initialized",
+      description: "Overwrite existing setup",
       default: false,
     },
   },
   run: async ({ args }) => {
-    const targetDir = getTargetSkillsDir(process.cwd());
-    const sourceDir = getSkillsSourceDir();
+    const targetSkillsDir = getTargetSkillsDir(process.cwd());
+    const sourceSkillsDir = getSkillsSourceDir();
+    const targetCommandsDir = getTargetCommandsDir(process.cwd());
+    const sourceCommandsDir = getCommandsSourceDir();
 
-    intro("flower setup");
+    intro("🌸 flower setup");
 
-    if (!hasContent(sourceDir)) {
+    if (!hasContent(sourceSkillsDir)) {
       log.error("Skills not found. CLI installation may be corrupted.");
       process.exit(1);
     }
 
-    if (hasContent(targetDir) && !args.force) {
-      log.warn("flower is already set up. Use --force to overwrite.");
+    const hasSkills = hasContent(targetSkillsDir);
+    const hasCommands = pathExists(targetCommandsDir);
 
-      if (!(await confirm({ message: "Force overwrite?", initialValue: false }))) {
-        return outro("Setup cancelled");
+    if ((hasSkills || hasCommands) && !args.force) {
+      log.warn("flower is already set up.");
+
+      if (!(await confirm({ message: "Overwrite existing?", initialValue: false }))) {
+        return outro("Setup cancelled.");
       }
     }
 
@@ -39,16 +49,31 @@ export default defineCommand({
     s.start("Copying skills...");
 
     try {
-      copyDir(sourceDir, targetDir);
-      s.stop("Skills copied");
+      copyDir(sourceSkillsDir, targetSkillsDir);
+      s.stop("✓ Skills copied");
     } catch (e) {
-      s.stop("Copy failed");
+      s.stop("✗ Failed to copy skills");
       log.error(getErrorMessage(e));
       process.exit(1);
     }
 
-    log.success(`${listFiles(targetDir).length} files → ${TARGET_DIR}/${SKILLS_DIR}/`);
-    log.info("Run 'flower doctor' to verify");
-    outro("Ready!");
+    if (pathExists(sourceCommandsDir)) {
+      s.start("Copying commands...");
+      try {
+        copyDir(sourceCommandsDir, targetCommandsDir);
+        s.stop("✓ Commands copied");
+      } catch (e) {
+        s.stop("✗ Failed to copy commands");
+        log.error(getErrorMessage(e));
+        process.exit(1);
+      }
+    }
+
+    const skills = listSkills(targetSkillsDir);
+    log.success(`${skills.length} skills → ${TARGET_DIR}/${SKILLS_DIR}/`);
+    if (pathExists(targetCommandsDir)) {
+      log.success(`commands → ${TARGET_DIR}/${COMMANDS_TARGET_SUBDIR}/`);
+    }
+    outro("Run 'flower doctor' to verify.");
   },
 });

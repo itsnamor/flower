@@ -10,9 +10,11 @@
   ],
   "type": "module",
   "scripts": {
-    "build": "bun build ./src/main.ts --outdir ./dist --target node && cp -r ../../skills dist/skills",
+    "build": "bun build ./src/main.ts --outdir ./dist --target node && bun run copy:skills && bun run copy:commands",
     "dev": "bun run ./src/main.ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "copy:skills": "rm -rf dist/skills && cp -r ../../skills dist/skills",
+    "copy:commands": "rm -rf dist/commands && cp -r ../../commands dist/commands"
   },
   "dependencies": {
     "@clack/prompts": "^1.2.0",

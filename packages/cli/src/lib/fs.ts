@@ -1,4 +1,5 @@
 import { cpSync, existsSync, readdirSync, readFileSync, statSync } from "node:fs";
+import { join } from "node:path";
 import { createHash } from "node:crypto";
 import { globSync } from "glob";
 
@@ -14,6 +15,13 @@ export const hashFile = async (path: string): Promise<string> => {
 
 export const listFiles = (dir: string): string[] =>
   globSync("**/*", { cwd: dir, nodir: true });
+
+export const listSkills = (dir: string): string[] => {
+  if (!existsSync(dir)) return [];
+  return readdirSync(dir).filter((f) =>
+    statSync(join(dir, f)).isDirectory()
+  );
+};
 
 export const pathExists = (path: string): boolean => existsSync(path);
 
