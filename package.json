@@ -1,8 +1,10 @@
 {
   "name": "flower",
   "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "type": "module",
-  "module": "index.ts",
   "devDependencies": {
     "@types/bun": "latest"
   },
