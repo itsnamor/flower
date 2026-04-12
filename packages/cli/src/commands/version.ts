@@ -1,5 +1,5 @@
 import { defineCommand } from "citty";
-import pkg from "$/../package.json" with { type: "json" };
+import { getPackageInfo } from "$/lib/package";
 
 export default defineCommand({
   meta: {
@@ -7,6 +7,7 @@ export default defineCommand({
     description: "Display the current version",
   },
   run: () => {
+    const pkg = getPackageInfo();
     console.log(`${pkg.name}@${pkg.version}`);
   },
 });

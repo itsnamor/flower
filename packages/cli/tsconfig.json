@@ -16,7 +16,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": false,
-    "types": ["@types/bun"],
+    "types": ["node"],
     "paths": {
       "$/*": ["./src/*"],
       "$lib/*": ["./src/lib/*"]

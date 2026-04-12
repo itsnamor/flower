@@ -12,10 +12,10 @@ Flower is a CLI (`@itsflower/cli`) that copies workflow skills to a target proje
 
 ```bash
 # Development
-bun run dev                    # Run CLI locally
+bun run dev                    # Run CLI locally via bun
 
 # Build
-bun run build                  # Build to dist/
+bun run build                  # Build to dist/ (Node.js target, not Bun)
 
 # Type checking
 bun run typecheck              # Run tsc --noEmit
@@ -34,19 +34,19 @@ bun run publish:cli --patch    # or --minor, --major
 flower/
 ├── packages/cli/              # CLI package (@itsflower/cli)
 │   ├── src/
-│   │   ├── main.ts            # Entry point, uses citty
+│   │   ├── main.ts            # Entry point, uses citty for CLI framework
 │   │   ├── commands/          # CLI commands (setup, doctor, version)
-│   │   ├── lib/               # Utilities (paths, fs, constants)
-│   │   └── utils/             # Helper functions
+│   │   ├── lib/               # Utilities (paths, fs, constants, package)
+│   │   └── utils/             # Helper functions (error handling)
 │   └── skills/                # Skills bundled with CLI (copied at build)
 │
-└── skills/                    # Source skills (copied to packages/cli during development)
-    ├── flower-propose/        # Capture requirements
-    ├── flower-design/         # Create technical design
-    ├── flower-plan/           # Break down into tasks
-    ├── flower-implement/      # Execute implementation
-    ├── flower-verify/         # Verify completeness
-    └── flower-review/         # Review code quality
+└── skills/                    # Source skills (source of truth)
+    ├── flower-propose/        # Capture requirements → requirement.md
+    ├── flower-design/         # Create technical design → design.md
+    ├── flower-plan/           # Break down into tasks → plan.md
+    ├── flower-implement/      # Execute implementation → code changes
+    ├── flower-verify/         # Verify completeness → verify.md
+    └── flower-review/         # Review code quality → review.md
 ```
 
 ## Flower Workflow
@@ -66,75 +66,207 @@ All outputs go to `.agents/flower/{YYMMDD-HHMM}--{short-desc}/`.
 
 ### CLI Commands
 
-Commands use `citty` with dynamic imports:
+Commands use `citty` with dynamic imports for lazy loading:
 
 ```typescript
 import { defineCommand } from "citty";
 
 export default defineCommand({
   meta: { name: "setup", description: "..." },
-  args: { force: { type: "boolean", alias: "f", default: false } },
+  args: {
+    force: { type: "boolean", alias: "f", default: false },
+  },
   run: async ({ args }) => {
     /* implementation */
   },
 });
 ```
 
-Command registration in `commands/index.ts`:
+Command registration in `commands/index.ts` uses dynamic imports:
 
 ```typescript
 export default {
   setup: () => import("./setup").then((m) => m.default),
-  // ...
+  doctor: () => import("./doctor").then((m) => m.default),
+  version: () => import("./version").then((m) => m.default),
 } as Record<string, () => Promise<CommandDef>>;
 ```
 
 ### Path Aliases
 
-tsconfig.json defines aliases:
+`tsconfig.json` defines path aliases:
 
 - `$/*` → `./src/*`
 - `$lib/*` → `./src/lib/*`
 
 Import example: `import { SKILLS_DIR } from "$lib/constants";`
 
-### Bun APIs
+### File System Utilities
 
-The codebase uses Bun-specific APIs:
+The CLI uses Node.js `fs` APIs wrapped in `lib/fs.ts`, NOT Bun's file APIs directly:
 
-- `Bun.Glob("*")` for file globbing
-- `Bun.file(path)` for file reading
-- `Bun.hash(content)` for file hashing
+```typescript
+// lib/fs.ts uses node:fs, node:crypto, glob
+export const hasContent = (dir: string): boolean => { ... };
+export const hashFile = async (path: string): Promise<string> => { ... };
+export const listFiles = (dir: string): string[] => { ... };
+export const copyDir = (src: string, dest: string) => { ... };
+```
 
-### Skills Structure
+### Prompts with @clack/prompts
 
-Each skill follows the agentskills.io spec:
+CLI uses `@clack/prompts` for interactive prompts:
+
+```typescript
+import { intro, outro, spinner, log, confirm } from "@clack/prompts";
+
+intro("flower setup");
+const s = spinner();
+s.start("Copying skills...");
+// ... work ...
+s.stop("Skills copied");
+outro("Ready!");
+```
+
+## Skills Structure
+
+Each skill follows the [agentskills.io](https://agentskills.io) specification:
 
 ```
 skill-name/
-├── SKILL.md          # Instructions (YAML frontmatter + markdown)
+├── SKILL.md                    # Instructions (YAML frontmatter + markdown)
+│   ---
+│   name: skill-name
+│   description: What this skill does. Use when X. Triggers on Y.
+│   ---
+│   # Skill instructions in markdown
 └── assets/
-    └── templates/    # Output templates
+    └── templates/              # Output templates (optional)
+        └── *.md                # Templates with YAML frontmatter
 ```
 
-## Key Files
+### Skill YAML Frontmatter
 
-- `packages/cli/src/lib/constants.ts` - `SKILLS_DIR`, `TARGET_DIR` (`.agents`), `EXPECTED_SKILLS`
-- `packages/cli/src/lib/paths.ts` - Path resolution for source and target skill directories
-- `packages/cli/src/lib/fs.ts` - File system utilities using Bun APIs
+Required fields in SKILL.md frontmatter:
+
+```yaml
+---
+name: flower-example
+description: What this skill does. Use when condition. Triggers on keywords.
+---
+```
+
+The `description` field is critical—it determines when the skill triggers. Format: `"What it does. Use when [condition]. Triggers on [keywords]."`
+
+### Template Structure
+
+Templates use YAML frontmatter for metadata:
+
+```yaml
+---
+title: ""
+type: feature
+createdAt: YYYY-MM-DD HH:MM
+---
+```
+
+## Key Files Reference
+
+| File                                | Purpose                                                         |
+| ----------------------------------- | --------------------------------------------------------------- |
+| `packages/cli/src/lib/constants.ts` | `SKILLS_DIR`, `TARGET_DIR` (`.agents`), `EXPECTED_SKILLS` array |
+| `packages/cli/src/lib/paths.ts`     | Path resolution for source and target skill directories         |
+| `packages/cli/src/lib/fs.ts`        | File system utilities using Node.js APIs                        |
+| `packages/cli/src/lib/package.ts`   | Package.json reader with caching                                |
+| `packages/cli/src/utils/error.ts`   | Error message extraction utility                                |
+
+## Development Workflow
+
+### Skills Development
+
+1. **Source of truth**: `skills/` directory at repo root
+2. **During development**: Copy skills to `packages/cli/skills/` for testing
+3. **At build time**: Skills in `packages/cli/skills/` are bundled into the npm package
+4. **At runtime**: CLI copies skills from bundle to target project's `.agents/skills/`
+
+### Build Process
+
+```
+1. Skills must exist in packages/cli/skills/ before build
+2. bun run build → outputs to dist/ (Node.js target for compatibility)
+3. npm publish includes dist/ and skills/ directories
+```
+
+The CLI targets **Node.js** (not Bun runtime) for wider compatibility with users who don't have Bun installed.
 
 ## Publishing
 
-The `publish:cli` script handles the full release:
+The `publish:cli` script (`scripts/publish-cli.ts`) handles the full release:
 
-1. Bumps version in package.json
-2. Builds the CLI
-3. Publishes to npm
-4. Commits the version change
+1. Parses `--major/--minor/--patch` argument
+2. Bumps version in `packages/cli/package.json`
+3. Builds the CLI to `dist/`
+4. Publishes to npm with `--access public`
+5. Commits the version change with message `release(cli): v{version}`
 
-## Development Notes
+## Important Conventions
 
-- Skills in `skills/` are the source of truth; they must be copied to `packages/cli/skills/` before building
-- The CLI targets Node.js (not Bun runtime) for wider compatibility
-- Templates use YAML frontmatter for metadata
-- Each skill has a maximum of 4 clarification iterations
+### Error Handling
+
+Use the utility in `utils/error.ts` for consistent error messages:
+
+```typescript
+import { getErrorMessage } from "$/utils/error";
+
+try {
+  // ...
+} catch (e) {
+  log.error(getErrorMessage(e));
+  process.exit(1);
+}
+```
+
+### Doctor Command Checks
+
+The `doctor` command performs 4 checks with pass/warn/fail status:
+
+1. **Directory**: Does `.agents/skills/` exist?
+2. **Skills**: Are all 6 expected skills present?
+3. **SKILL.md**: Does each skill have a SKILL.md file?
+4. **Integrity**: Have any files been modified from original? (uses SHA256 hashes)
+
+### Constants
+
+All shared constants live in `lib/constants.ts`:
+
+- `SKILLS_DIR = "skills"`
+- `TARGET_DIR = ".agents"`
+- `EXPECTED_SKILLS = ["flower-design", "flower-plan", "flower-propose", "flower-review", "flower-implement", "flower-verify"]`
+
+## Dependencies
+
+### Production
+
+- `citty` - CLI framework with subcommands
+- `@clack/prompts` - Interactive prompts
+- `glob` - File globbing
+
+### Development
+
+- `bun` - Runtime and package manager
+- `typescript` - Type checking
+- `@types/bun`, `@types/node` - Type definitions
+
+## Gotchas
+
+1. **Skills must be copied before build**: The CLI bundle includes skills from `packages/cli/skills/`, not from the root `skills/` directory. Always sync before building.
+
+2. **Node.js target**: The CLI builds with `--target node` for compatibility, even though development uses Bun.
+
+3. **Path resolution**: Skills source directory is resolved relative to the compiled file location using `import.meta.url`.
+
+4. **Package version caching**: `getPackageInfo()` caches the result—intentional for CLI runtime, but be aware during testing.
+
+5. **No tests currently**: The project has no test suite yet. Test manually via `bun run dev`.
+
+6. **Bun-only scripts**: The publish script uses `bun` APIs (`$` template literal for shell commands) and won't run with Node.

@@ -3,8 +3,10 @@
 import { defineCommand, runMain } from "citty";
 import { intro, outro } from "@clack/prompts";
 
-import pkg from "$/../package.json" with { type: "json" };
 import commands from "$/commands";
+import { getPackageInfo } from "$/lib/package";
+
+const pkg = getPackageInfo();
 
 const main = defineCommand({
   meta: {
