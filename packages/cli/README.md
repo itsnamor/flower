@@ -2,7 +2,15 @@
 
 🌸 CLI for flower - scaffold structured development workflows in your project.
 
-## Installation
+## Quick Start
+
+Run without installing:
+
+```bash
+npx @flowrr/cli setup
+```
+
+Or install globally:
 
 ```bash
 npm install -g @flowrr/cli
@@ -26,11 +34,15 @@ Set up Flower in your project. Copies the skill files to `.agents/skills/` in yo
 
 ```bash
 flower setup
+# or run directly with npx
+npx @flowrr/cli setup
 ```
 
 **Options:**
 
-- `-f, --force` - Force setup even if already initialized (will overwrite existing files)
+| Option        | Description                                                             |
+| ------------- | ----------------------------------------------------------------------- |
+| `-f, --force` | Force setup even if already initialized (will overwrite existing files) |
 
 ### `flower doctor`
 
@@ -59,12 +71,14 @@ flower version
 
 `flower` is a structured development workflow system that provides AI-assisted skills for:
 
-- **flower-design** - Design and architecture planning
-- **flower-plan** - Task planning and breakdown
-- **flower-propose** - Propose solutions and approaches
-- **flower-review** - Code and design review
-- **flower-implement** - Implementation guidance
-- **flower-verify** - Verification and testing
+| Skill                | Purpose                          |
+| -------------------- | -------------------------------- |
+| **flower-design**    | Design and architecture planning |
+| **flower-plan**      | Task planning and breakdown      |
+| **flower-propose**   | Propose solutions and approaches |
+| **flower-review**    | Code and design review           |
+| **flower-implement** | Implementation guidance          |
+| **flower-verify**    | Verification and testing         |
 
 When you run `flower setup`, these skills are copied to your project's `.agents/skills/` directory where they can be used by AI assistants.
 
@@ -93,22 +107,6 @@ your-project/
 │           ├── SKILL.md
 │           └── assets/
 └── ...
-```
-
-## Development
-
-```bash
-# Install dependencies
-bun install
-
-# Run in development mode
-bun run dev
-
-# Build for production
-bun run build
-
-# Type check
-bun run typecheck
 ```
 
 ## License
