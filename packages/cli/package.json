@@ -1,21 +1,14 @@
 {
-  "name": "@flower/cli",
-  "version": "0.0.1",
+  "name": "@itsflower/cli",
+  "version": "0.2.4",
+  "description": "CLI for Flower - scaffold structured development workflows",
   "bin": {
-    "flower": "./dist/main.ts"
+    "flower": "./dist/main.js"
   },
   "files": [
     "dist"
   ],
   "type": "module",
-  "main": "./dist/main.ts",
-  "types": "./dist/main.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/main.d.ts",
-      "import": "./dist/main.ts"
-    }
-  },
   "scripts": {
     "build": "bun build ./src/main.ts --outdir ./dist --target node",
     "dev": "bun run ./src/main.ts",

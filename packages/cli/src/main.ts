@@ -10,19 +10,7 @@ const main = defineCommand({
     version: pkg.version,
     description: "flower - 🌸 Scaffold structured development workflows in your project",
   },
-  args: {
-    verbose: {
-      type: "boolean",
-      description: "Enable verbose output",
-      alias: "v",
-    },
-  },
   subCommands: commands,
-  setup: ({ args }) => {
-    if (args.verbose) {
-      Bun.env.VERBOSE = "true";
-    }
-  },
   run: () => {
     intro("flower");
     outro("Use `flower --help` to see available commands");
