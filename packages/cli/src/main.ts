@@ -8,9 +8,9 @@ import commands from "$/commands";
 
 const main = defineCommand({
   meta: {
-    name: pkg.name,
+    name: "flower",
     version: pkg.version,
-    description: "flower - 🌸 Scaffold structured development workflows in your project",
+    description: "🌸 Scaffold structured development workflows in your project",
   },
   subCommands: commands,
   run: () => {
