@@ -89,7 +89,7 @@ const checkIntegrity = async (targetDir: string, sourceDir: string): Promise<Sta
 };
 
 export default defineCommand({
-  meta: { name: "doctor", description: "Check Flower setup integrity" },
+  meta: { name: "doctor", description: "Check `flower` setup integrity" },
   run: async () => {
     const targetDir = getTargetSkillsDir(process.cwd());
     const sourceDir = getSkillsSourceDir();

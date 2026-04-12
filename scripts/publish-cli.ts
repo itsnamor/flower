@@ -9,6 +9,7 @@ import { readFileSync, writeFileSync } from "fs";
 import { resolve } from "path";
 
 const CLI_PACKAGE_PATH = resolve(import.meta.dir, "../packages/cli/package.json");
+const CLI_DIR = resolve(import.meta.dir, "../packages/cli");
 
 type VersionBump = "major" | "minor" | "patch";
 
@@ -60,13 +61,13 @@ async function main() {
   packageJson.version = newVersion;
   writeFileSync(CLI_PACKAGE_PATH, JSON.stringify(packageJson, null, 2) + "\n");
 
-  // Build CLI
+  // Build CLI (this also copies skills to dist/skills)
   console.log("\nBuilding CLI...");
-  await $`bun run build`.cwd(resolve(import.meta.dir, "../packages/cli"));
+  await $`bun run build`.cwd(CLI_DIR);
 
   // Publish to npm
   console.log("\nPublishing to npm...");
-  await $`npm publish --access public`.cwd(resolve(import.meta.dir, "../packages/cli"));
+  await $`npm publish --access public`.cwd(CLI_DIR);
 
   // Commit changes
   console.log("\nCommitting changes...");

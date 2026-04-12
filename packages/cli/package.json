@@ -1,17 +1,16 @@
 {
   "name": "@flowrr/cli",
   "version": "0.1.1",
-  "description": "CLI for Flower - scaffold structured development workflows",
+  "description": "CLI for `flower` - scaffold structured development workflows",
   "bin": {
     "flower": "dist/main.js"
   },
   "files": [
-    "dist",
-    "skills"
+    "dist"
   ],
   "type": "module",
   "scripts": {
-    "build": "bun build ./src/main.ts --outdir ./dist --target node",
+    "build": "bun build ./src/main.ts --outdir ./dist --target node && cp -r ../../skills dist/skills",
     "dev": "bun run ./src/main.ts",
     "typecheck": "tsc --noEmit"
   },

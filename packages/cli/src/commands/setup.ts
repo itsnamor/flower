@@ -7,7 +7,7 @@ import { hasContent, listFiles, copyDir } from "$lib/fs";
 import { getErrorMessage } from "$/utils/error";
 
 export default defineCommand({
-  meta: { name: "setup", description: "Set up Flower in your project" },
+  meta: { name: "setup", description: "Set up `flower` in your project" },
   args: {
     force: {
       type: "boolean",
@@ -28,7 +28,7 @@ export default defineCommand({
     }
 
     if (hasContent(targetDir) && !args.force) {
-      log.warn("Flower is already set up. Use --force to overwrite.");
+      log.warn("flower is already set up. Use --force to overwrite.");
 
       if (!(await confirm({ message: "Force overwrite?", initialValue: false }))) {
         return outro("Setup cancelled");

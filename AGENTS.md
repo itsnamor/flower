@@ -1,10 +1,10 @@
-# Flower
+# flower
 
 CLI tool that scaffolds structured development workflows in any project.
 
 ## Project Overview
 
-Flower is a CLI (`@flowrr/cli`) that copies workflow skills to a target project's `.agents/skills/` directory. These skills guide agents through a structured development process: propose → design → plan → implement → verify → review.
+`flower` is a CLI (`@flowrr/cli`) that copies workflow skills to a target project's `.agents/skills/` directory. These skills guide agents through a structured development process: propose → design → plan → implement → verify → review.
 
 ## Commands
 
@@ -49,7 +49,7 @@ flower/
     └── flower-review/         # Review code quality → review.md
 ```
 
-## Flower Workflow
+## `flower` Workflow
 
 | Phase | Skill              | Purpose                           | Output           |
 | ----- | ------------------ | --------------------------------- | ---------------- |
