@@ -10,7 +10,7 @@ const main = defineCommand({
   meta: {
     name: "flower",
     version: pkg.version,
-    description: "🌸 Scaffold structured development workflows in your project",
+    description: "🌸 scaffold structured development workflows in your project",
   },
   subCommands: commands,
   run: () => {

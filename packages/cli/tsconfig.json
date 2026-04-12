@@ -18,7 +18,8 @@
     "noEmit": false,
     "types": ["@types/bun"],
     "paths": {
-      "$/*": ["./src/*"]
+      "$/*": ["./src/*"],
+      "$lib/*": ["./src/lib/*"]
     }
   },
   "include": ["src/**/*"],
