@@ -1,6 +1,6 @@
 {
   "name": "@flowrr/cli",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "CLI for `flower` - scaffold structured development workflows",
   "bin": {
     "flower": "dist/main.js"
