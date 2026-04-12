@@ -75,7 +75,7 @@ async function main() {
   await $`git add packages/cli/package.json`.cwd(rootDir);
   await $`git commit -m ${commitMessage}`.cwd(rootDir);
 
-  console.log(`\n✓ Published @itsflower/cli@${newVersion}`);
+  console.log(`\n✓ Published @flowrr/cli@${newVersion}`);
 }
 
 main().catch((err) => {

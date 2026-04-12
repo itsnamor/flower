@@ -4,7 +4,7 @@ CLI tool that scaffolds structured development workflows in any project.
 
 ## Project Overview
 
-Flower is a CLI (`@itsflower/cli`) that copies workflow skills to a target project's `.agents/skills/` directory. These skills guide agents through a structured development process: propose → design → plan → implement → verify → review.
+Flower is a CLI (`@flowrr/cli`) that copies workflow skills to a target project's `.agents/skills/` directory. These skills guide agents through a structured development process: propose → design → plan → implement → verify → review.
 
 ## Commands
 

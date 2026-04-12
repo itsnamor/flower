@@ -1,6 +1,6 @@
-# @itsflower/cli
+# @flowrr/cli
 
-[![npm version](https://img.shields.io/npm/v/@itsflower/cli.svg)](https://www.npmjs.com/package/@itsflower/cli)
+[![npm version](https://img.shields.io/npm/v/@flowrr/cli.svg)](https://www.npmjs.com/package/@flowrr/cli)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 CLI for Flower — scaffold structured development workflows in your project.
@@ -21,13 +21,13 @@ CLI for Flower — scaffold structured development workflows in your project.
 
 ```bash
 # Using bun (recommended)
-bun add -g @itsflower/cli
+bun add -g @flowrr/cli
 
 # Using npm
-npm install -g @itsflower/cli
+npm install -g @flowrr/cli
 
 # Using pnpm
-pnpm add -g @itsflower/cli
+pnpm add -g @flowrr/cli
 ```
 
 ### Basic Usage
