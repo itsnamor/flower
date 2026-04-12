@@ -46,13 +46,14 @@ export default defineCommand({
     }
 
     const s = spinner();
-    s.start("Copying skills...");
+    const skills = listSkills(sourceSkillsDir);
 
+    s.start("Copying skills...");
     try {
       copyDir(sourceSkillsDir, targetSkillsDir);
-      s.stop("✓ Skills copied");
+      s.stop(`${skills.length} skills → ${TARGET_DIR}/${SKILLS_DIR}/`);
     } catch (e) {
-      s.stop("✗ Failed to copy skills");
+      s.stop("Failed to copy skills");
       log.error(getErrorMessage(e));
       process.exit(1);
     }
@@ -61,19 +62,14 @@ export default defineCommand({
       s.start("Copying commands...");
       try {
         copyDir(sourceCommandsDir, targetCommandsDir);
-        s.stop("✓ Commands copied");
+        s.stop(`commands → ${TARGET_DIR}/${COMMANDS_TARGET_SUBDIR}/`);
       } catch (e) {
-        s.stop("✗ Failed to copy commands");
+        s.stop("Failed to copy commands");
         log.error(getErrorMessage(e));
         process.exit(1);
       }
     }
 
-    const skills = listSkills(targetSkillsDir);
-    log.success(`${skills.length} skills → ${TARGET_DIR}/${SKILLS_DIR}/`);
-    if (pathExists(targetCommandsDir)) {
-      log.success(`commands → ${TARGET_DIR}/${COMMANDS_TARGET_SUBDIR}/`);
-    }
     outro("Run 'flower doctor' to verify.");
   },
 });
