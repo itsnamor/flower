@@ -7,6 +7,26 @@ description: Verify implementation completeness, correctness, and coherence. Che
 
 Verify implementation is complete, correct, and coherent.
 
+## Phase Constraints
+
+This phase is **verification and documentation only**. The goal is to assess, not fix.
+
+### Allowed
+
+- Read and analyze all documents and code
+- Run tests and inspect implementation
+- Create and update `verify.md`
+
+### Not Allowed
+
+- Modifying implementation code
+- Fixing bugs (document them instead)
+- Making file changes (except `verify.md`)
+
+### Why This Matters
+
+Verification validates that what was built matches what was planned. By keeping verification separate from fixes, you create a clear audit trail and avoid introducing new issues while fixing old ones.
+
 ## Workflow
 
 ```mermaid
@@ -28,18 +48,6 @@ flowchart TD
     L --> M[Final Summary]
     M --> N[Done]
 ```
-
-| Step | Action                             |
-| ---- | ---------------------------------- |
-| 1    | Get Task Path                      |
-| 2    | Read All Documents                 |
-| 3    | Check Completeness                 |
-| 4    | Update verify.md (MANDATORY)       |
-| 5    | Check Correctness                  |
-| 6    | Update verify.md (MANDATORY)       |
-| 7    | Check Coherence (if design exists) |
-| 8    | Update verify.md (MANDATORY)       |
-| 9    | Final Summary                      |
 
 ---
 

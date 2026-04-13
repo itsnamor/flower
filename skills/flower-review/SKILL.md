@@ -7,6 +7,26 @@ description: Review code quality, security, and cross-cutting concerns file-by-f
 
 Review code quality and security after verification.
 
+## Phase Constraints
+
+This phase is **review and documentation only**. The goal is to identify issues, not fix them.
+
+### Allowed
+
+- Read and analyze all documents and code
+- Search codebase for patterns
+- Create and update `review.md`
+
+### Not Allowed
+
+- Modifying implementation code
+- Fixing issues (document them instead)
+- Making file changes (except `review.md`)
+
+### Why This Matters
+
+Review provides quality assurance. By keeping review separate from fixes, you create a clear record of issues found and allow for prioritized fixes rather than ad-hoc changes.
+
 ## Workflow
 
 ```mermaid
@@ -28,19 +48,6 @@ flowchart TD
     L --> M[Final Summary]
     M --> N[Done]
 ```
-
-| Step | Action                        |
-| ---- | ----------------------------- |
-| 1    | Get Task Path                 |
-| 2    | Read All Documents            |
-| 3    | Identify Files to Review      |
-| 4    | Create review.md              |
-| 5    | Review Files One-by-One       |
-| 6    | Update review.md (MANDATORY)  |
-| 7    | Review Cross-Cutting Concerns |
-| 8    | Update review.md (MANDATORY)  |
-| 9    | Categorize Issues             |
-| 10   | Final Summary                 |
 
 ---
 
@@ -114,19 +121,7 @@ Read `assets/templates/review.md`, fill sections (title, createdAt, list files t
 
 #### DRY (Don't Repeat Yourself)
 
-Check for:
-
-- Duplicate code blocks in this file
-- Similar logic that could be extracted
-- Copy-pasted patterns from other files
-
-**How to check:**
-
-- Read file for repeated patterns
-- Search codebase for similar code
-- Compare with other modified files
-
-**Flag if:**
+Flag if:
 
 - Same logic appears 2+ times
 - Similar functions in different files
@@ -134,39 +129,16 @@ Check for:
 
 #### YAGNI (You Aren't Gonna Need It)
 
-Check for:
-
-- Unused code in this file
-- Over-engineering
-- Features not in requirement/design
-
-**How to check:**
-
-- Check if all code is used
-- Verify against requirement scope
-- Look for premature abstractions
-
-**Flag if:**
+Flag if:
 
 - Commented-out code
 - Unused functions/variables/imports
 - Complex abstractions for simple needs
+- Features not in requirement/design
 
 #### KISS (Keep It Simple)
 
-Check for:
-
-- Overly complex solutions
-- Unnecessary abstractions
-- Hard-to-understand code
-
-**How to check:**
-
-- Read code for clarity
-- Count nesting levels
-- Check function complexity
-
-**Flag if:**
+Flag if:
 
 - Deep nesting (>3 levels)
 - Long functions (>30 lines)
@@ -174,86 +146,47 @@ Check for:
 
 #### Clean Code
 
-Check for:
+Flag if:
 
-**Naming:**
-
-- Variable names are meaningful
-- Function names describe action
-- No cryptic abbreviations
-
-**Functions:**
-
-- Functions are small (<20 lines ideal)
-- Functions do one thing
-- Clear purpose
-
-**Structure:**
-
-- Clear code flow
-- Readable formatting
-- Logical organization
+- Variable names not meaningful
+- Function names don't describe action
+- Cryptic abbreviations
+- Functions over 20 lines
+- Functions doing multiple things
+- Unclear code flow
 
 ### Security Review (per file)
 
 #### Input Validation
 
-Check for:
-
-- User inputs validated
-- Type checking done
-- Boundary checks exist
-
-**Common issues:**
+Flag if:
 
 - Missing validation on user inputs
-- Trust of external data
+- Trust of external data without validation
 - Missing type checks
 
 #### Sensitive Data
 
-Check for:
+Flag if:
 
-- No hardcoded secrets (API keys, passwords)
-- Secrets in environment variables
-- Sensitive data not in logs
-
-**Common issues:**
-
-- Hardcoded API keys
-- Passwords in code
+- Hardcoded API keys or passwords
 - Sensitive data logged
 
 #### Authentication & Authorization
 
-Check for:
+Flag if:
 
-- Auth checks on protected routes
-- Proper session handling
-- Role-based access if needed
-
-**Common issues:**
-
-- Missing auth checks
+- Missing auth checks on protected routes
 - Insecure session handling
 - Improper access control
 
 #### Common Vulnerabilities
 
-**SQL Injection:**
+Flag if:
 
-- Parameterized queries used
-- No string concatenation in SQL
-
-**XSS (Cross-Site Scripting):**
-
-- Output is escaped
-- No raw HTML insertion
-
-**CSRF (Cross-Site Request Forgery):**
-
-- CSRF tokens used
-- Proper request validation
+- SQL: String concatenation in queries
+- XSS: Raw HTML insertion without escaping
+- CSRF: Missing tokens on state-changing requests
 
 ---
 

@@ -7,6 +7,34 @@ description: Create technical design from requirement.md. Use when the task is c
 
 Create technical design documentation from requirements.
 
+## Phase Constraints
+
+This phase is **thinking and documentation only**. The goal is to design the solution before building it.
+
+### Allowed
+
+- Read and search the codebase (Grep, Glob, View)
+- Research documentation, patterns, best practices
+- Analyze existing architecture and patterns
+- Sketch diagrams and describe architecture in prose
+- Document technical decisions and rationale
+- Ask clarifying questions
+- Create the `design.md` document
+
+### Not Allowed
+
+- Writing, editing, or suggesting code changes
+- Providing implementation code or snippets
+- Making file changes of any kind (except `design.md`)
+
+### Why This Matters
+
+Design is about making decisions. Code commits you to a direction before you've fully explored alternatives. By separating design from implementation, you can:
+
+- Explore multiple approaches without cost
+- Get alignment on direction before building
+- Create a reference for the implement phase
+
 ## Workflow
 
 ```mermaid
@@ -31,16 +59,6 @@ flowchart TD
     J -->|No| M[Create design.md]
     M --> N[Done]
 ```
-
-| Step | Action                 |
-| ---- | ---------------------- |
-| 1    | Get Task Path          |
-| 2    | Read Requirement       |
-| 3    | Assess Need            |
-| 4    | Explore Codebase & Web |
-| 5    | Draft Design           |
-| 6    | Clarify Loop (max 4)   |
-| 7    | Create design.md       |
 
 ---
 

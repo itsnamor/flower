@@ -7,6 +7,36 @@ description: Create implementation plan from requirement.md and design.md. Break
 
 Create implementation plan with ordered tasks and acceptance criteria.
 
+## Phase Constraints
+
+This phase is **planning and documentation only**. The goal is to break down work into actionable tasks before starting.
+
+### Allowed
+
+- Read requirement and design documents
+- Analyze scope and complexity
+- Break down work into ordered tasks
+- Define acceptance criteria for each task
+- Identify dependencies and risks
+- Create the `plan.md` document
+
+### Not Allowed
+
+- Writing, editing, or suggesting code changes
+- Providing implementation code or snippets
+- Making file changes of any kind (except `plan.md`)
+
+### Why This Matters
+
+Planning creates a roadmap. When you jump to code without a plan, you risk:
+
+- Missing dependencies
+- Forgetting edge cases
+- Building in the wrong order
+- Losing track of progress
+
+A plan keeps implementation focused and measurable.
+
 ## Workflow
 
 ```mermaid
@@ -30,17 +60,6 @@ flowchart TD
     I -->|No| L[Create plan.md]
     L --> M[Done]
 ```
-
-| Step | Action                  |
-| ---- | ----------------------- |
-| 1    | Get Task Path           |
-| 2    | Read Requirement        |
-| 3    | Read Design (if exists) |
-| 4    | Analyze & Break Down    |
-| 5    | Order Tasks             |
-| 6    | Define AC for Each Task |
-| 7    | Clarify Loop (max 4)    |
-| 8    | Create plan.md          |
 
 ---
 

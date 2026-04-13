@@ -26,16 +26,6 @@ flowchart TD
     I --> J[Done]
 ```
 
-| Step | Action                     |
-| ---- | -------------------------- |
-| 1    | Get Task Path              |
-| 2    | Read All Documents         |
-| 3    | Create Todo List           |
-| 4    | Implement Task             |
-| 5    | Update plan.md (MANDATORY) |
-| 6    | Repeat Until Done          |
-| 7    | Final Summary              |
-
 ---
 
 ## Step 1: Get Task Path
@@ -208,35 +198,6 @@ Files:
 - src/components/ThemeToggle.tsx (created)
 - src/App.tsx (modified)
 ```
-
----
-
-## Implementation Guidelines
-
-### Code Quality
-
-- Use meaningful names
-- Keep functions under 20 lines when possible
-- Add comments only for "why", not "what"
-- Follow project's existing patterns
-
-### Testing
-
-- Write tests alongside code when applicable
-- Test happy path and edge cases
-- Ensure tests pass before marking task complete
-
-### Error Handling
-
-- Handle expected errors gracefully
-- Provide useful error messages
-- Don't swallow errors silently
-
-### Security
-
-- Validate inputs
-- Don't expose sensitive data
-- Follow security best practices
 
 ---
 

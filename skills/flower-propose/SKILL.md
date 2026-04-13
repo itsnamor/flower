@@ -7,6 +7,30 @@ description: Capture and clarify requirements from user input. Use when user wan
 
 Transform user input into a structured requirement document.
 
+## Phase Constraints
+
+This phase is **research, exploration, and clarification only**. The goal is to understand the problem before solving it.
+
+### Allowed
+
+- Read and search the codebase (Grep, Glob, View)
+- Research documentation and best practices
+- Ask clarifying questions
+- Describe findings in prose
+- Identify patterns, dependencies, constraints
+- Create the `requirement.md` document
+
+### Not Allowed
+
+- Writing, editing, or suggesting code changes
+- Providing code snippets, diffs, or pseudocode
+- Offering implementation hints ("you could do X by...")
+- Making file changes of any kind (except `requirement.md`)
+
+### Why This Matters
+
+Good requirements come from understanding, not jumping to solutions. If you provide code during this phase, you short-circuit the design and planning phases that should shape the implementation.
+
 ## Workflow
 
 ```mermaid
