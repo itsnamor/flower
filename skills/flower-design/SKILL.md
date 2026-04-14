@@ -11,22 +11,6 @@ This phase is **thinking and documentation only**. Focus on **how** to implement
 
 **If a task doesn't need design, say so explicitly and stop. Do not create design.md.**
 
-### Do
-
-- Read and search the codebase (Grep, Glob, View)
-- Research documentation, patterns, best practices
-- Analyze existing architecture and patterns
-- Sketch diagrams and describe architecture
-- Document technical decisions with rationale
-- Ask clarifying questions about implementation approaches
-- Create the `design.md` document
-
-### Do Not
-
-- Write, edit, or suggest code changes
-- Provide implementation code or snippets
-- Make file changes of any kind (except `design.md`)
-
 ## Workflow
 
 ```mermaid
