@@ -3,51 +3,23 @@ name: flower-review
 description: Review code quality, security, and cross-cutting concerns file-by-file. Check DRY, YAGNI, KISS principles, security vulnerabilities, and project conventions. Triggers on 'review', 'code review', 'security review', 'check code'.
 ---
 
-# Flower Review
-
 Review code quality and security after verification.
 
-## Phase Constraints
+## Core Principle
 
-This phase is **review and documentation only**. The goal is to identify issues, not fix them.
+This phase is **review and documentation only**. Identify issues, do not fix them.
 
-### Allowed
+### Do
 
 - Read and analyze all documents and code
 - Search codebase for patterns
 - Create and update `review.md`
 
-### Not Allowed
+### Do Not
 
-- Modifying implementation code
-- Fixing issues (document them instead)
-- Making file changes (except `review.md`)
-
-### Why This Matters
-
-Review provides quality assurance. By keeping review separate from fixes, you create a clear record of issues found and allow for prioritized fixes rather than ad-hoc changes.
-
-## Workflow
-
-```mermaid
-flowchart TD
-    A[Check Input for Task] --> B{Path found?}
-    B -->|No| C[Ask user for path]
-    C --> D[Read all docs]
-    B -->|Yes| D
-
-    D --> E[Identify files from plan.md]
-    E --> F[Create review.md]
-    F --> G[Review each file]
-    G --> H[Update review.md]
-    H --> I{More files?}
-    I -->|Yes| G
-    I -->|No| J[Review cross-cutting]
-    J --> K[Update review.md]
-    K --> L[Categorize issues]
-    L --> M[Final Summary]
-    M --> N[Done]
-```
+- Modify implementation code
+- Fix issues (document them instead)
+- Make file changes (except `review.md`)
 
 ---
 
@@ -57,18 +29,16 @@ Check user input for path, folder name, or partial match. Construct full path `.
 
 ---
 
-## Step 2: Read Documents
+## Step 2: Read Inputs
 
-### Read Order
+Read the following files from the task folder:
 
-1. **requirement.md** - Understand what was built
-2. **design.md** (if exists) - Understand architecture decisions
-3. **plan.md** - Identify files created/modified
-4. **verify.md** (if exists) - See verification results
+1. **requirement.md** — understand what was built
+2. **design.md** — understand architecture decisions (if exists)
+3. **plan.md** — identify files created/modified
+4. **verify.md** — see verification results (if exists)
 
-### Extract Information
-
-Understand context before reviewing:
+Extract:
 
 - What features were implemented
 - What decisions were made
@@ -78,32 +48,7 @@ Understand context before reviewing:
 
 ## Step 3: Identify Files to Review
 
-### From plan.md
-
-Extract file list from plan.md:
-
-- Files explicitly mentioned in tasks
-- Files created (new)
-- Files modified (existing)
-
-### From Git (Optional)
-
-If available, use git to identify changed files:
-
-```bash
-git diff --name-only HEAD~1
-```
-
-### Create File List
-
-List all files to review:
-
-```
-Files to review:
-- src/components/ThemeToggle.tsx (new)
-- src/contexts/ThemeContext.tsx (new)
-- src/styles/globals.css (modified)
-```
+From plan.md, extract all files explicitly mentioned, created, or modified. Optionally use `git diff --name-only` to supplement.
 
 ---
 
@@ -115,104 +60,41 @@ Read `assets/templates/review.md`, fill sections (title, createdAt, list files t
 
 ## Step 5: Review Files One-by-One
 
-**For each file, perform quality and security review.**
+For each file, perform quality and security review.
 
-### Quality Review (per file)
+### Quality Review
 
-#### DRY (Don't Repeat Yourself)
+| Principle | Flag If                                                           |
+| --------- | ----------------------------------------------------------------- |
+| **DRY**   | Same logic appears 2+ times, copy-pasted code                     |
+| **YAGNI** | Commented-out code, unused functions/variables/imports            |
+| **KISS**  | Deep nesting (>3 levels), long functions (>30 lines)              |
+| **Clean** | Meaningless names, cryptic abbreviations, multi-concern functions |
 
-Flag if:
+### Security Review
 
-- Same logic appears 2+ times
-- Similar functions in different files
-- Copy-pasted code without abstraction
-
-#### YAGNI (You Aren't Gonna Need It)
-
-Flag if:
-
-- Commented-out code
-- Unused functions/variables/imports
-- Complex abstractions for simple needs
-- Features not in requirement/design
-
-#### KISS (Keep It Simple)
-
-Flag if:
-
-- Deep nesting (>3 levels)
-- Long functions (>30 lines)
-- Over-engineered patterns
-
-#### Clean Code
-
-Flag if:
-
-- Variable names not meaningful
-- Function names don't describe action
-- Cryptic abbreviations
-- Functions over 20 lines
-- Functions doing multiple things
-- Unclear code flow
-
-### Security Review (per file)
-
-#### Input Validation
-
-Flag if:
-
-- Missing validation on user inputs
-- Trust of external data without validation
-- Missing type checks
-
-#### Sensitive Data
-
-Flag if:
-
-- Hardcoded API keys or passwords
-- Sensitive data logged
-
-#### Authentication & Authorization
-
-Flag if:
-
-- Missing auth checks on protected routes
-- Insecure session handling
-- Improper access control
-
-#### Common Vulnerabilities
-
-Flag if:
-
-- SQL: String concatenation in queries
-- XSS: Raw HTML insertion without escaping
-- CSRF: Missing tokens on state-changing requests
+| Category         | Flag If                                                   |
+| ---------------- | --------------------------------------------------------- |
+| Input Validation | Missing validation on user inputs, trusting external data |
+| Sensitive Data   | Hardcoded API keys/passwords, sensitive data logged       |
+| Auth & Authz     | Missing auth checks, insecure sessions, improper ACL      |
+| Common Vulns     | SQL injection, XSS, missing CSRF tokens                   |
 
 ---
 
 ## Step 6: Update review.md (MANDATORY)
 
-**This step is mandatory after reviewing each file.**
+**Mandatory after reviewing each file.**
 
-Update `.agents/flower/{folder-name}/review.md` matching template format:
-
-**Passed:**
+Update checks and add issues:
 
 ```markdown
 - [x] Check name
-  - Status: passed
-  - Notes: description
+  - Status: passed | failed
+  - Notes: description or recommendation
 ```
 
-**Failed:**
-
-```markdown
-- [x] Check name
-  - Status: failed
-  - Notes: reason + recommendation
-```
-
-Add issues to Issues section, replacing "None" with:
+Add issues to Issues section by severity:
 
 ```markdown
 ### CRITICAL
@@ -225,54 +107,20 @@ Add issues to Issues section, replacing "None" with:
 
 ## Step 7: Review Cross-Cutting Concerns
 
-After reviewing all files, check project-wide concerns:
+After all files are reviewed, check project-wide:
 
-### Naming Consistency
-
-Check across all modified files:
-
-- Consistent naming style (camelCase, PascalCase)
-- Consistent file naming
-- Consistent folder structure
-
-### Project Conventions
-
-Check if code follows:
-
-- Existing code patterns
-- Import organization
-- Code style (formatting, indentation)
-
-### Documentation
-
-Check if:
-
-- Comments added for complex logic
-- README updated if needed
-- API docs updated if endpoints changed
-
-### Tests
-
-Check if:
-
-- Unit tests exist for new functions
-- Integration tests for features
-- Test coverage adequate
+| Concern             | Check                                                 |
+| ------------------- | ----------------------------------------------------- |
+| Naming Consistency  | Consistent style (camelCase, PascalCase) across files |
+| Project Conventions | Follows existing code patterns, imports, formatting   |
+| Documentation       | Comments for complex logic, README/API docs updated   |
+| Tests               | Unit tests for new functions, adequate coverage       |
 
 ---
 
 ## Step 8: Update review.md (MANDATORY)
 
-**This step is mandatory after cross-cutting review.**
-
-### Update Cross-Cutting Section
-
-Fill cross-cutting concerns section with:
-
-- Naming consistency results
-- Convention adherence results
-- Documentation status
-- Test coverage status
+Update cross-cutting concerns section with results.
 
 ---
 
@@ -280,103 +128,26 @@ Fill cross-cutting concerns section with:
 
 ### Severity Levels
 
-| Level      | Meaning                    | When to Use                             |
-| ---------- | -------------------------- | --------------------------------------- |
-| CRITICAL   | Must fix before proceeding | Security vulnerabilities, critical bugs |
-| WARNING    | Should fix                 | Quality issues, missing tests           |
-| SUGGESTION | Optional improvements      | Minor refactoring opportunities         |
-
-### Categorization Rules
-
-**CRITICAL:**
-
-- Hardcoded secrets
-- Authentication bypasses
-- SQL injection risks
-- XSS vulnerabilities
-- Critical logic errors
-
-**WARNING:**
-
-- Duplicate code (significant)
-- Missing tests for core features
-- Missing input validation
-- Complex code that needs simplification
-
-**SUGGESTION:**
-
-- Minor naming improvements
-- Small refactoring opportunities
-- Optional documentation
-- Non-critical clean code suggestions
+| Level      | Meaning                    | Examples                                              |
+| ---------- | -------------------------- | ----------------------------------------------------- |
+| CRITICAL   | Must fix before proceeding | Hardcoded secrets, auth bypasses, SQL injection       |
+| WARNING    | Should fix                 | Significant duplication, missing tests, no validation |
+| SUGGESTION | Optional improvements      | Minor naming, small refactoring, optional docs        |
 
 ---
 
 ## Step 10: Final Summary
 
-### Calculate Summary
-
-| Category      | CRITICAL | WARNING | SUGGESTION |
-| ------------- | -------- | ------- | ---------- |
-| Quality       | --       | --      | --         |
-| Security      | --       | --      | --         |
-| Cross-cutting | --       | --      | --         |
-
 ### Determine Recommendation
 
-**If CRITICAL issues found:**
+- **CRITICAL issues** → `REVIEW FAILED` — list critical issues
+- **WARNING/SUGGESTION only** → `REVIEW PASSED (with notes)` — list warnings and suggestions
+- **All pass** → `REVIEW PASSED`
 
-```
-REVIEW FAILED
-
-Critical issues:
-- [list critical issues]
-```
-
-**If only WARNING/SUGGESTION:**
-
-```
-REVIEW PASSED (with notes)
-
-Warnings:
-- [list warnings]
-
-Suggestions:
-- [list suggestions]
-```
-
-**If all pass:**
-
-```
-REVIEW PASSED
-
-No issues found. Code quality and security checks passed.
-```
-
-### Update review.md Summary
-
-1. Fill summary table
-2. List all issues by severity
-3. Update sign-off section
-
-### Report to User
-
-```
-Review Complete: .agents/flower/{folder-name}/review.md
-
-Files reviewed: X
-
-Summary:
-| Category      | CRITICAL | WARNING | SUGGESTION |
-|---------------|----------|-----------|--------------|
-| Quality       | X        | Y         | Z            |
-| Security      | X        | Y         | Z            |
-| Cross-cutting | X        | Y         | Z            |
-
-```
+Update review.md summary and sign-off sections.
 
 ---
 
 ## Output
 
-Inform user: file location, summary table, issues by severity.
+Inform user: file location, files reviewed count, summary table (quality/security/cross-cutting by severity).

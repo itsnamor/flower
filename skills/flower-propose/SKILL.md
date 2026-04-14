@@ -47,13 +47,6 @@ flowchart TD
     H --> I[Done]
 ```
 
-| Step | Action                | Output                                             |
-| ---- | --------------------- | -------------------------------------------------- |
-| 1    | Classify Request Type | Type: feature/bug/improve/refactor/setup/explore   |
-| 2    | Gather Context        | Codebase findings, Web research                    |
-| 3    | Clarify Loop          | Max 4 iterations, closed questions                 |
-| 4    | Create requirement.md | `.agents/flower/{datetime}--{desc}/requirement.md` |
-
 ---
 
 ## Step 1: Classify Request Type

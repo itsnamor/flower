@@ -11,26 +11,6 @@ This phase is **planning and sequencing only**. Focus on **what work to do, in w
 
 A good plan turns ambiguity into a checklist. Each task must be small enough to implement in one focused session and have clear acceptance criteria.
 
-## Workflow
-
-```mermaid
-flowchart TD
-    A[Get Task Path] --> B[Read requirement.md]
-    B --> C[Read design.md if exists]
-    C --> D[Assess Scope]
-    D --> E[Break Down Tasks]
-    E --> F[Create plan.md]
-    F --> G[Done]
-```
-
-| Step | Action           | Output                                  |
-| ---- | ---------------- | --------------------------------------- |
-| 1    | Get Task Path    | Folder path under `.agents/flower/`     |
-| 2    | Read Inputs      | Understand requirements and design      |
-| 3    | Assess Scope     | Decide number of phases and granularity |
-| 4    | Break Down Tasks | Ordered tasks with independent AC       |
-| 5    | Create plan.md   | `.agents/flower/{folder}/plan.md`       |
-
 ---
 
 ## Step 1: Get Task Path

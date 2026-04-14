@@ -91,6 +91,8 @@ If no `- [ ]` remains, go to **Output**.
 
 ### 3.2 Implement
 
+Use the context gathered in Step 2 (requirement, design, plan) to implement the task. Previous phases already explored the codebase extensively — **only search or read additional files if the existing context is insufficient.**
+
 Implement **the minimal change** that satisfies the task description and its AC.
 
 ### 3.3 Update plan.md
@@ -112,3 +114,4 @@ After all tasks are complete, report to user:
 
 - Number of tasks completed vs total
 - Key files modified or created
+- Suggested next step: **verify phase**

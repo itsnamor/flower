@@ -7,7 +7,9 @@ Create technical design documentation from requirements.
 
 ## Core Principle
 
-This phase is **thinking and documentation only**. Focus on **how** to implement what was defined in requirements. Design is expensive — only do it when truly necessary.
+This phase is **thinking and documentation only**. Your responsibility is to decide **how** to implement the requirements: choose architecture, define data flow, select patterns, and outline interfaces. Focus on the technical approach, not writing code.
+
+Design is expensive — only do it when truly necessary.
 
 **If a task doesn't need design, say so explicitly and stop. Do not create design.md.**
 
@@ -30,15 +32,6 @@ flowchart TD
     F -->|No| J
     J --> K[Done]
 ```
-
-| Step | Action              | Output                              |
-| ---- | ------------------- | ----------------------------------- |
-| 1    | Get Task Path       | Folder path with requirement.md     |
-| 2    | Read requirement.md | Understand what to design           |
-| 3    | Assess Need         | Decision: design or skip            |
-| 4    | Explore             | Codebase findings, Web research     |
-| 5    | Clarify Loop        | Max 4 iterations                    |
-| 6    | Create design.md    | `.agents/flower/{folder}/design.md` |
 
 ---
 
@@ -168,7 +161,7 @@ You have enough context to draft the design. Don't be exhaustive.
 
 ---
 
-## Step 5: Clarify Loop
+## Step 5: Clarify Decisions
 
 **Maximum 4 iterations.**
 

@@ -56,7 +56,5 @@ createdAt: YYYY-MM-DD HH:MM
 
 <!-- Useful references from research. -->
 
-| Type     | Reference                                     |
-| -------- | --------------------------------------------- |
-| codebase | `src/path/file.ts:42` — brief note            |
-| docs     | `https://docs.example.com/topic` — brief note |
+<!-- - `path/to/file.ts:42` — relevance note -->
+<!-- - [Title](https://url) — what it covers -->
