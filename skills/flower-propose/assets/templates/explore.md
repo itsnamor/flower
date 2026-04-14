@@ -34,3 +34,9 @@ createdAt: YYYY-MM-DD HH:MM
 ## Timebox
 
 <!-- Max time to spend: e.g., 2 hours, 1 day -->
+
+## References
+
+<!-- Useful sources discovered during research. Remove this section if none. -->
+<!-- - `path/to/file.ts:42` — relevance note -->
+<!-- - [Title](https://url) — what it covers -->

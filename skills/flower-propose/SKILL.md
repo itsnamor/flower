@@ -103,6 +103,19 @@ Refine keywords after each clarification round in Step 3.
 - Only search libraries already in the project or explicitly mentioned by user
 - Skip if no relevant external docs exist
 
+### Track References
+
+As you research, maintain a running list of **useful** references discovered during Step 2 and Step 3. Only include references that actually informed the requirement — not everything you looked at.
+
+| Type       | What to record                                    | Example                                                       |
+| ---------- | ------------------------------------------------- | ------------------------------------------------------------- |
+| Codebase   | File path with line number + brief relevance note | `src/lib/auth.ts:42` — current auth logic                     |
+| Docs       | URL + title/topic                                 | https://docs.example.com/auth — OAuth2 setup guide            |
+| Article    | URL + title                                       | https://blog.example.com/post — "Best practices for token..." |
+| Discussion | URL + context (GitHub issue, forum thread, etc.)  | https://github.com/org/repo/issues/123 — related bug report   |
+
+Drop any reference that turned out irrelevant after further research.
+
 ---
 
 ## Step 3: Clarify Requirements
@@ -150,7 +163,8 @@ Summarize what you understand in 2–3 sentences. State assumptions openly. Upda
 1. Read template from `assets/templates/{type}.md` (feature/bug/improve/refactor/setup/explore)
 2. Fill sections based on gathered information
 3. Set `createdAt` (YYYY-MM-DD HH:MM) and `title`
-4. Write to `.agents/flower/{YYMMDD-HHMM}--{short-desc}/requirement.md`
+4. Fill the `## References` section with useful references tracked during research
+5. Write to `.agents/flower/{YYMMDD-HHMM}--{short-desc}/requirement.md`
 
 ---
 

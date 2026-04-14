@@ -27,3 +27,9 @@ As a [user type], I want to [action] so that [benefit].
 ## Technical Notes
 
 <!-- Optional: technical constraints, dependencies -->
+
+## References
+
+<!-- Useful sources discovered during research. Remove this section if none. -->
+<!-- - `path/to/file.ts:42` — relevance note -->
+<!-- - [Title](https://url) — what it covers -->

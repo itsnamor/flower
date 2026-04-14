@@ -34,3 +34,9 @@ createdAt: YYYY-MM-DD HH:MM
 
 - [ ] Bug is fixed: [expected behavior is restored]
 - [ ] No regression in related features
+
+## References
+
+<!-- Useful sources discovered during research. Remove this section if none. -->
+<!-- - `path/to/file.ts:42` — relevance note -->
+<!-- - [Title](https://url) — what it covers -->

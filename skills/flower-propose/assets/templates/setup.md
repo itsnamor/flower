@@ -27,3 +27,9 @@ createdAt: YYYY-MM-DD HH:MM
 
 - [ ] Setup is complete and working
 - [ ] Documented in README or relevant docs
+
+## References
+
+<!-- Useful sources discovered during research. Remove this section if none. -->
+<!-- - `path/to/file.ts:42` — relevance note -->
+<!-- - [Title](https://url) — what it covers -->
