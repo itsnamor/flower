@@ -7,26 +7,56 @@ createdAt: YYYY-MM-DD HH:MM
 
 ## Overview
 
-<!-- High-level architecture. Use mermaid diagram when helpful. -->
+<!-- High-level architecture. Use mermaid diagram when there are multiple components. -->
 
 ## Key Decisions
 
-<!-- List important technical decisions and rationale. -->
+<!-- Important technical decisions with rationale. -->
 
 ### Decision 1: <!-- Title -->
 
 - **Context**: <!-- Why this decision was needed -->
+- **Options**: <!-- Alternatives considered -->
 - **Decision**: <!-- What was decided -->
 - **Rationale**: <!-- Why this approach -->
 
 ## Implementation Details
 
-<!-- Filled based on task type. See guidelines below. -->
+<!-- Technical specifics based on task type. -->
+
+### Files Changed
+
+| File              | Change               | Notes             |
+| ----------------- | -------------------- | ----------------- |
+| `path/to/file.ts` | new/modified/deleted | Brief description |
+
+### Data Structures
+
+<!-- Types, interfaces, schemas -->
+
+### API Contracts
+
+<!-- If backend: endpoints, request/response formats -->
+
+### Component Hierarchy
+
+<!-- If frontend: component tree, props flow -->
 
 ## Risks & Trade-offs
 
-<!-- Known risks and trade-offs of the chosen approach. -->
+| Risk                      | Mitigation              |
+| ------------------------- | ----------------------- |
+| <!-- Risk description --> | <!-- How to address --> |
 
 ## Out of Scope
 
 <!-- What is explicitly not part of this design. -->
+
+## References
+
+<!-- Useful references from research. -->
+
+| Type     | Reference                                     |
+| -------- | --------------------------------------------- |
+| codebase | `src/path/file.ts:42` — brief note            |
+| docs     | `https://docs.example.com/topic` — brief note |
