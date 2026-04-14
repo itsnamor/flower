@@ -19,8 +19,6 @@ createdAt: YYYY-MM-DD HH:MM
 
 ## 1. Completeness
 
-**Question:** Are all tasks from plan.md complete?
-
 ### Task Completion
 
 - Total tasks: --
@@ -40,8 +38,6 @@ createdAt: YYYY-MM-DD HH:MM
 ---
 
 ## 2. Correctness
-
-**Question:** Does implementation satisfy all acceptance criteria?
 
 ### Acceptance Criteria Tests
 
@@ -68,8 +64,6 @@ createdAt: YYYY-MM-DD HH:MM
 ---
 
 ## 3. Coherence
-
-**Question:** Does implementation follow design decisions?
 
 <!-- Skip this section if no design.md -->
 
