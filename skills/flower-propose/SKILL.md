@@ -3,174 +3,149 @@ name: flower-propose
 description: Capture and clarify requirements from user input. Use when user wants to propose a new feature, fix a bug, improve something, refactor code, setup infrastructure, or explore/investigate. Triggers on 'add', 'fix', 'improve', 'refactor', 'setup', 'how', 'why', 'what', 'research', or any new task request.
 ---
 
-# Flower Propose
-
 Transform user input into a structured requirement document.
 
-## Phase Constraints
+## Core Principle
 
-This phase is **research, exploration, and clarification only**. The goal is to understand the problem before solving it.
+This phase is **research, exploration, and clarification only**. Focus exclusively on **what** the user needs and **why** — never on
+**how** to implement it. Good requirements come from understanding, not jumping to solutions.
 
-### Allowed
+**If a request is unfeasible, decline it directly with an explanation.**
 
-- Read and search the codebase (Grep, Glob, View)
-- Research documentation and best practices
-- Ask clarifying questions
-- Describe findings in prose
-- Identify patterns, dependencies, constraints
-- Create the `requirement.md` document
+### Do
 
-### Not Allowed
+• Read and search the codebase (Grep, Glob, View)
+• Research documentation and best practices
+• Ask clarifying questions
+• Describe findings in prose
+• Identify patterns, dependencies, constraints
+• Create the `requirement.md` document
 
-- Writing, editing, or suggesting code changes
-- Providing code snippets, diffs, or pseudocode
-- Offering implementation hints ("you could do X by...")
-- Making file changes of any kind (except `requirement.md`)
+### Do Not
 
-### Why This Matters
-
-Good requirements come from understanding, not jumping to solutions. If you provide code during this phase, you short-circuit the design and planning phases that should shape the implementation.
+• Think about implementation approaches or technical solutions
+• Write, edit, or suggest code changes
+• Provide code snippets, diffs, or pseudocode
+• Offer implementation hints ("you could do X by...")
+• Make file changes of any kind (except `requirement.md`)
 
 ## Workflow
 
 ```mermaid
 flowchart TD
-    A[User Input] --> B[Classify Type]
-    B --> C[Analyze Request]
-    C --> D[Gather Context]
-    D --> E{Still Unclear?}
+    A[User Input] --> B[Classify Request Type]
+    B --> C[Gather Context]
+    C --> D{Still Unclear?}
 
-    E -->|Yes| F[Ask Clarification]
-    F --> G[User Response]
-    G --> H{Iteration < 4?}
-    H -->|Yes| C
-    H -->|No| I[Feasibility Check]
+    D -->|Yes| E[Ask Clarification]
+    E --> F[User Response]
+    F --> G{Iteration < 4?}
+    G -->|Yes| C
+    G -->|No| H[Create requirement.md]
 
-    E -->|No| I
-
-    I --> J{Feasible?}
-    J -->|Yes| K[Create requirement.md]
-    J -->|No| L[Explain Blockers]
-
-    K --> M[Done]
-    L --> M
+    D -->|No| H
+    H --> I[Done]
 ```
 
-| Step | Action         | Output                                             |
-| ---- | -------------- | -------------------------------------------------- |
-| 1    | Classify       | Type: feature/bug/improve/refactor/setup/explore   |
-| 2    | Analyze        | What, Why, Who, Context                            |
-| 3    | Gather Context | Codebase findings, Web research                    |
-| 4    | Clarify Loop   | Max 4 iterations, closed questions                 |
-| 5    | Feasibility    | Technical/Scope/Dependencies check                 |
-| 6    | Create         | `.agents/flower/{datetime}--{desc}/requirement.md` |
+| Step | Action                | Output                                             |
+| ---- | --------------------- | -------------------------------------------------- |
+| 1    | Classify Request Type | Type: feature/bug/improve/refactor/setup/explore   |
+| 2    | Gather Context        | Codebase findings, Web research                    |
+| 3    | Clarify Loop          | Max 4 iterations, closed questions                 |
+| 4    | Create requirement.md | `.agents/flower/{datetime}--{desc}/requirement.md` |
 
 ---
 
 ## Step 1: Classify Request Type
 
-Identify the type based on user intent:
+Match user input against keywords to identify the request type:
 
-| Type       | Keywords                                              | Description                   |
-| ---------- | ----------------------------------------------------- | ----------------------------- |
-| `feature`  | add, new, implement, create                           | Add new capability            |
-| `bug`      | fix, bug, error, broken, crash                        | Fix incorrect behavior        |
-| `improve`  | improve, faster, better, optimize, enhance            | Improve existing (not broken) |
-| `refactor` | refactor, clean up, reorganize, rename                | Change code, keep behavior    |
-| `setup`    | setup, configure, install, initialize, add dependency | Infrastructure/config         |
-| `explore`  | how, why, what, research, investigate                 | Question/investigation        |
+| Type       | Keywords                                              | Description                                                                                          |
+| ---------- | ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `feature`  | add, new, implement, create                           | A capability that **does not exist yet**. New behavior, endpoint, UI element, or command.            |
+| `bug`      | fix, bug, error, broken, crash                        | Something **exists but works incorrectly**. Errors, crashes, wrong output, unexpected behavior.      |
+| `improve`  | improve, faster, better, optimize, enhance            | Something **works but could be better**. Performance, UX, output quality — no broken behavior.       |
+| `refactor` | refactor, clean up, reorganize, rename                | **Restructure code without changing observable behavior.** Renaming, deduplication, pattern changes. |
+| `setup`    | setup, configure, install, initialize, add dependency | **Infrastructure, tooling, or configuration.** Not user-facing functionality.                        |
+| `explore`  | how, why, what, research, investigate                 | **Pure question or investigation.** No code change implied — only understanding and research.        |
 
-**Decision rule**: When uncertain, ask: "Is the user asking me to implement something, or just understand something?"
-
-- Implement → feature/bug/improve/refactor/setup
-- Understand → explore
+If ambiguous, **immediately ask the user** a closed question to determine the exact type before proceeding to Step 2.
 
 ---
 
-## Step 2: Analyze User Request
+## Step 2: Gather Context
 
-Extract and understand:
+Only gather information to build context. Do not reason, judge, or draw conclusions.
 
-- **What**: The core request
-- **Why**: The motivation/problem
-- **Who**: Affected users/stakeholders
-- **Context**: Related features, current state
+### Extract Keywords
 
-If the request is vague, note specific gaps to address in clarification.
+Analyze user input and extract keywords by category:
 
----
+- **Domain** — feature names, module names, business concepts
+- **Technical** — library names, API names, protocols, patterns
+- **Errors** (bugs only) — error messages, stack traces, status codes
+- **Files** — file names, paths, directories mentioned or implied
 
-## Step 3: Gather Context
+Refine keywords after each clarification round in Step 3.
 
-### Explore Codebase
+### Codebase
 
-Use available tools to search for:
+- Search for related functions, patterns, and dependencies using Grep, Glob, View
+- Read files in chunks — never read an entire large file whole
+- Prioritize: entry points → configs → types → implementations
+- Check imports and dependencies of related files to map the affected surface
+- Stop when you have enough context — don't be exhaustive
 
-- Related existing code (Grep for keywords)
-- Similar features/patterns (Glob for file patterns)
-- Dependencies and integrations (check imports, configs)
+### External
 
-### Explore Web (if applicable)
-
-Search for:
-
-- Best practices for this type of task
-- Library/framework documentation
-- Similar implementations or patterns
-
-Document findings briefly. If no relevant context found, note "No existing context found."
+- Use Context7 MCP to look up official docs for libraries/tools relevant to the request
+- Search on internet for best practices, constraints, and known limitations
+- Only search libraries already in the project or explicitly mentioned by user
+- Skip if no relevant external docs exist
 
 ---
 
-## Step 4: Clarify Loop
+## Step 3: Clarify Requirements
 
-**Maximum 4 iterations.** Present requirement and ask for feedback.
+**Maximum 4 iterations.**
 
-### How It Works
+### Transition Rules
 
-1. **Present**: Show the drafted requirement
-2. **Ask**: "Does this requirement look clear? Any missing details?"
-3. **Receive**: Get user feedback
-4. **Refine**: Update requirement based on feedback
-5. **Repeat**: Ask again until approved or max iterations
+Decide immediately after each user response:
 
-### Question Guidelines
+- **User explicitly approves** → go to Step 4
+- **Enough clarity, no gaps** → go to Step 4
+- **Gaps remain** → ask the user, then return to Step 2
+- **4 iterations reached** → go to Step 4 regardless
 
-- Prefer closed questions (Yes/No, multiple choice) over open-ended
-- Provide options when possible (e.g., "Impact: low/medium/high?")
-- One question at a time, or max 2-3 related questions
-- Use context from exploration to avoid asking known info
-- Stop early if requirement is clear
+### Identify Gaps
 
-### Exit Conditions
+Check these categories and list gaps explicitly before asking:
 
-Exit the loop and proceed to Feasibility when ANY of these is true:
+| Category                | Question                                       |
+| ----------------------- | ---------------------------------------------- |
+| Scope / Boundary        | What is in and out of scope?                   |
+| Behavioral Ambiguity    | What happens in edge cases or failures?        |
+| Missing Constraints     | Any limits on size, rate, format, performance? |
+| Conflicting Information | Mismatches between code, docs, and request?    |
+| User Preference         | UI style, defaults, ordering, naming?          |
+| Acceptance Criteria     | How is success measured?                       |
 
-| Condition                 | Action                          |
-| ------------------------- | ------------------------------- |
-| User approves requirement | Proceed to Feasibility Check    |
-| Iteration count = 4       | Proceed with best understanding |
+### Draft Requirement
 
----
+Summarize what you understand in 2–3 sentences. State assumptions openly. Update it every iteration.
 
-## Step 5: Feasibility Check
+### Ask Questions
 
-Perform a quick assessment:
-
-| Check            | Questions                                          | If Blocked                          |
-| ---------------- | -------------------------------------------------- | ----------------------------------- |
-| **Technical**    | Can this be done with current stack? Any blockers? | Explain why, suggest alternatives   |
-| **Scope**        | Is this realistic for one session? Need to split?  | Suggest breaking into smaller tasks |
-| **Dependencies** | Any external blockers? API access, services?       | List blockers, do NOT create file   |
-
-**Outcome**:
-
-- **Feasible** → Proceed to Step 6
-- **Not feasible** → Explain blockers to user, do NOT create requirement.md
+- Prefer closed questions (Yes/No, multiple choice)
+- Group related questions (max 2–3 at a time)
+- Provide sensible defaults or options
+- Never ask for information already gathered in Step 2
+- Target the highest-impact gaps first
 
 ---
 
-## Step 6: Create requirement.md
+## Step 4: Create requirement.md
 
 1. Read template from `assets/templates/{type}.md` (feature/bug/improve/refactor/setup/explore)
 2. Fill sections based on gathered information
