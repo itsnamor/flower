@@ -203,7 +203,7 @@ Summarize the design in 2–3 sentences. State decisions and trade-offs openly. 
 
 ## Step 6: Create design.md
 
-1. Read template from `assets/templates/design.md`
+1. Run `flower template show design` to get the template
 2. Fill all sections based on gathered information
 3. Set `createdAt` (YYYY-MM-DD HH:MM) and `title` (from requirement)
 4. Fill the `## References` section with useful references tracked during research

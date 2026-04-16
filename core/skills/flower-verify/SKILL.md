@@ -60,7 +60,7 @@ Count tasks marked `- [x]` (complete) vs `- [ ]` (incomplete).
 
 ## Step 4: Update verify.md (MANDATORY)
 
-Read `assets/templates/verify.md` and create `.agents/flower/{folder-name}/verify.md`. Fill Completeness section: task count, completion percentage, incomplete tasks, issue level.
+Run `flower template show verify` to get the template, then create `.agents/flower/{folder-name}/verify.md`. Fill Completeness section: task count, completion percentage, incomplete tasks, issue level.
 
 ---
 

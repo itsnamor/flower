@@ -85,7 +85,7 @@ Each task must have:
 
 ## Step 5: Create plan.md
 
-1. Read template from `assets/templates/plan.md`
+1. Run `flower template show plan` to get the template
 2. Fill all sections based on the task breakdown
 3. Set `createdAt` (YYYY-MM-DD HH:MM) and `title` (from requirement)
 4. Write to `.agents/flower/{folder-name}/plan.md`

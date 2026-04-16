@@ -54,7 +54,7 @@ From plan.md, extract all files explicitly mentioned, created, or modified. Opti
 
 ## Step 4: Create review.md
 
-Read `assets/templates/review.md`, fill sections (title, createdAt, list files to review, keep checks as pending). Write to `.agents/flower/{folder-name}/review.md`.
+Run `flower template show review` to get the template, fill sections (title, createdAt, list files to review, keep checks as pending). Write to `.agents/flower/{folder-name}/review.md`.
 
 ---
 

@@ -153,7 +153,7 @@ Summarize what you understand in 2–3 sentences. State assumptions openly. Upda
 
 ## Step 4: Create requirement.md
 
-1. Read template from `assets/templates/{type}.md` (feature/bug/improve/refactor/setup/explore)
+1. Run `flower template show propose/{type}` to get the template (feature/bug/improve/refactor/setup/explore)
 2. Fill sections based on gathered information
 3. Set `createdAt` (YYYY-MM-DD HH:MM) and `title`
 4. Fill the `## References` section with useful references tracked during research
