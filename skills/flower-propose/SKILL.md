@@ -157,7 +157,7 @@ Summarize what you understand in 2–3 sentences. State assumptions openly. Upda
 2. Fill sections based on gathered information
 3. Set `createdAt` (YYYY-MM-DD HH:MM) and `title`
 4. Fill the `## References` section with useful references tracked during research
-5. Write to `.agents/flower/{YYMMDD-HHMM}--{short-desc}/requirement.md`
+5. Write to `.agents/flower/{YYMMDD-HHMM}--{short-desc}/requirement.md` . Run `date +"%y%m%d-%H%M"` to get datetime string.
 
 ---
 
