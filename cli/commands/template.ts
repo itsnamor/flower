@@ -2,15 +2,19 @@ import { defineCommand } from "citty";
 import { join } from "node:path";
 
 import { getTemplatesSourceDir } from "$utils/paths";
-import { pathExists, isDirectory, listDirectories, listMarkdownFiles, readTextFile } from "$utils/fs";
+import {
+  pathExists,
+  isDirectory,
+  listDirectories,
+  listMarkdownFiles,
+  readTextFile,
+} from "$utils/fs";
 
 const sourceDir = getTemplatesSourceDir();
 
 type TemplateEntry = { phase: string; files: string[] };
 
 function getTemplateEntries(): TemplateEntry[] {
-  if (!pathExists(sourceDir)) return [];
-
   return listDirectories(sourceDir)
     .map((phase) => ({
       phase,
@@ -19,20 +23,22 @@ function getTemplateEntries(): TemplateEntry[] {
     .filter((e) => e.files.length > 0);
 }
 
-function renderTree(entries: TemplateEntry[]) {
-  console.log(".");
+function renderTree(entries: TemplateEntry[]): string {
+  const lines = ["."];
 
   entries.forEach(({ phase, files }, phaseIndex) => {
     const isLastPhase = phaseIndex === entries.length - 1;
-    console.log(`${isLastPhase ? "└── " : "├── "}${phase}`);
+    lines.push(`${isLastPhase ? "└── " : "├── "}${phase}`);
 
     files.forEach((name, fileIndex) => {
       const isLastFile = fileIndex === files.length - 1;
       const indent = isLastPhase ? "    " : "│   ";
       const branch = isLastFile ? "└── " : "├── ";
-      console.log(`${indent}${branch}${name}`);
+      lines.push(`${indent}${branch}${name}`);
     });
   });
+
+  return lines.join("\n");
 }
 
 function listTemplates() {
@@ -41,7 +47,7 @@ function listTemplates() {
     process.exit(1);
   }
 
-  renderTree(getTemplateEntries());
+  console.log(renderTree(getTemplateEntries()));
 }
 
 function resolveTemplateFile(phase: string, template?: string): string {

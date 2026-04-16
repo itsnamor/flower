@@ -6,15 +6,18 @@ import { SKILLS_DIR, TARGET_DIR, EXPECTED_SKILLS, EXPECTED_COMMANDS } from "../c
 import { getSkillsSourceDir, getTargetSkillsDir, getTargetCommandsDir } from "$utils/paths";
 import { hasContent, listFiles, hashFile, pathExists } from "$utils/fs";
 
-type Status = "pass" | "warn" | "fail";
+const ICONS = { pass: "✓", warn: "▲", fail: "✗" } as const;
+type Status = keyof typeof ICONS;
 
-const ICONS = { pass: "✓", warn: "▲", fail: "✗" };
+const statusLogger: Record<Status, (msg: string) => void> = {
+  pass: log.success,
+  warn: log.warn,
+  fail: log.error,
+};
 
 function check(label: string, status: Status, message?: string): Status {
   const text = message ? `${label}: ${message}` : label;
-  if (status === "pass") log.success(`${ICONS.pass} ${text}`);
-  if (status === "warn") log.warn(`${ICONS.warn} ${text}`);
-  if (status === "fail") log.error(`${ICONS.fail} ${text}`);
+  statusLogger[status](`${ICONS[status]} ${text}`);
   return status;
 }
 
@@ -81,11 +84,20 @@ export default defineCommand({
       checkIntegrity(targetSkillsDir, sourceSkillsDir),
     ];
 
+    let worstStatus: Status = "pass";
     if (results.includes("fail")) {
-      outro("Run 'flower setup --force' to fix.");
-      process.exit(1);
+      worstStatus = "fail";
+    } else if (results.includes("warn")) {
+      worstStatus = "warn";
     }
 
-    outro(results.includes("warn") ? "Setup has warnings." : "All checks passed.");
+    const outroByStatus: Record<Status, string> = {
+      fail: "Run 'flower setup --force' to fix.",
+      warn: "Setup has warnings.",
+      pass: "All checks passed.",
+    };
+
+    outro(outroByStatus[worstStatus]);
+    if (worstStatus === "fail") process.exit(1);
   },
 });

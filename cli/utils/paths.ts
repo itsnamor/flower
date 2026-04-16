@@ -1,4 +1,4 @@
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { pathExists } from "./fs";
 import {
   SKILLS_DIR,
@@ -11,12 +11,11 @@ import {
 const CORE_DIR = "core";
 
 function findPackageRoot(): string {
-  const candidates = ["../../package.json", "../package.json"];
-  for (const relative of candidates) {
-    const candidate = join(import.meta.dirname, relative);
-    if (pathExists(candidate)) {
-      return join(candidate, "..");
-    }
+  let current = import.meta.dirname;
+  while (current !== dirname(current)) {
+    const candidate = join(current, "package.json");
+    if (pathExists(candidate)) return current;
+    current = dirname(current);
   }
   throw new Error("Unable to resolve package root");
 }
