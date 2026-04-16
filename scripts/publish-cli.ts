@@ -8,8 +8,8 @@ import { $ } from "bun";
 import { readFileSync, writeFileSync } from "fs";
 import { resolve } from "path";
 
-const CLI_PACKAGE_PATH = resolve(import.meta.dir, "../packages/cli/package.json");
-const CLI_DIR = resolve(import.meta.dir, "../packages/cli");
+const CLI_PACKAGE_PATH = resolve(import.meta.dir, "../package.json");
+const CLI_DIR = resolve(import.meta.dir, "..");
 
 type VersionBump = "major" | "minor" | "patch";
 
@@ -61,7 +61,7 @@ async function main() {
   packageJson.version = newVersion;
   writeFileSync(CLI_PACKAGE_PATH, JSON.stringify(packageJson, null, 2) + "\n");
 
-  // Build CLI (this also copies skills to dist/skills)
+  // Build CLI
   console.log("\nBuilding CLI...");
   await $`bun run build`.cwd(CLI_DIR);
 
@@ -73,7 +73,7 @@ async function main() {
   console.log("\nCommitting changes...");
   const rootDir = resolve(import.meta.dir, "..");
   const commitMessage = `release(cli): v${newVersion}`;
-  await $`git add packages/cli/package.json`.cwd(rootDir);
+  await $`git add package.json`.cwd(rootDir);
   await $`git commit -m ${commitMessage}`.cwd(rootDir);
 
   console.log(`\n✓ Published @flowrr/cli@${newVersion}`);

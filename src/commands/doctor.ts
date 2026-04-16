@@ -2,18 +2,8 @@ import { defineCommand } from "citty";
 import { intro, outro, log } from "@clack/prompts";
 import { join } from "node:path";
 
-import {
-  SKILLS_DIR,
-  TARGET_DIR,
-  COMMANDS_TARGET_SUBDIR,
-  EXPECTED_SKILLS,
-  EXPECTED_COMMANDS,
-} from "$lib/constants";
-import {
-  getSkillsSourceDir,
-  getTargetSkillsDir,
-  getTargetCommandsDir,
-} from "$lib/paths";
+import { SKILLS_DIR, TARGET_DIR, EXPECTED_SKILLS, EXPECTED_COMMANDS } from "$lib/constants";
+import { getSkillsSourceDir, getTargetSkillsDir, getTargetCommandsDir } from "$lib/paths";
 import { hasContent, listFiles, hashFile, pathExists } from "$lib/fs";
 
 type Status = "pass" | "warn" | "fail";

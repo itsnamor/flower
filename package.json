@@ -1,17 +1,31 @@
 {
-  "name": "flower",
-  "private": true,
-  "workspaces": [
-    "packages/*"
+  "name": "@flowrr/cli",
+  "version": "0.1.5",
+  "description": "CLI for `flower` - scaffold structured development workflows",
+  "bin": {
+    "flower": "dist/main.js"
+  },
+  "files": [
+    "dist",
+    "skills",
+    "commands",
+    "templates"
   ],
   "type": "module",
   "scripts": {
+    "build": "bun build ./src/main.ts --outdir ./dist --target node",
+    "dev": "bun run ./src/main.ts",
+    "typecheck": "tsc --noEmit",
     "publish:cli": "bun run scripts/publish-cli.ts"
   },
-  "devDependencies": {
-    "@types/bun": "^1.3.12"
+  "dependencies": {
+    "@clack/prompts": "^1.2.0",
+    "citty": "^0.2.2",
+    "glob": "^13.0.6"
   },
-  "peerDependencies": {
+  "devDependencies": {
+    "@types/bun": "^1.3.12",
+    "@types/node": "^25.6.0",
     "typescript": "^6.0.2"
   }
 }
