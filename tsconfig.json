@@ -12,16 +12,16 @@
     "declarationMap": true,
     "sourceMap": true,
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": ".",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": false,
     "types": ["node"],
     "paths": {
-      "$/*": ["./src/*"],
-      "$lib/*": ["./src/lib/*"]
+      "$/*": ["./cli/*"],
+      "$utils/*": ["./cli/utils/*"]
     }
   },
-  "include": ["src/**/*"],
+  "include": ["cli/**/*"],
   "exclude": ["node_modules", "dist"]
 }
